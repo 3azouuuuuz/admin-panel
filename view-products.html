@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+    <title>View Products | PlainAdmin Demo</title>
+
+    <!-- ========== All CSS files linkup ========= -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+  /* Tooltip styling */
+.items-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+.items-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 320px;
+  background-color: #333;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 12px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.items-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+/* Table spacing improvements */
+.table-responsive .table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+.table-responsive .table th,
+.table-responsive .table td {
+  padding: 12px;
+  vertical-align: middle;
+  line-height: 1.6;
+  border-bottom: 1px solid #dee2e6;
+}
+.table-responsive .table th {
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: 20px;
+}
+.table-responsive .table tr {
+  transition: background-color 0.2s;
+}
+.table-responsive .table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+.table-responsive .table .delete-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+@media (max-width: 768px) {
+  .table-responsive .table th,
+  .table-responsive .table td {
+    padding: 8px;
+  }
+}
+/* Styles for flash sale button and modal */
+#addToFlashSaleBtn.red {
+  background-color: #dc3545;
+}
+#addToFlashSaleBtn.green {
+  background-color: #28a745;
+}
+#addToFlashSaleBtn.blue {
+  background-color: #007bff;
+}
+#addToFlashSaleBtn.brown {
+  background-color: #8b4513;
+}
+#addToFlashSaleBtn.orange {
+  background-color: #fd7e14;
+}
+#addToFlashSaleBtn {
+  color: #fff;
+}
+#selectedProductsContainer .product-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+#selectedProductsContainer .product-item img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 15px;
+}
+#selectedProductsContainer .product-item .input-style-1 {
+  flex-grow: 1;
+}
+</style>
+  </head>
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+  <div class="navbar-logo">
+    <a href="index.html">
+      <img src="assets/images/logo/logo.svg" alt="logo" />
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_1"
+          aria-controls="ddmenu_1"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.74999 18.3333C12.2376 18.3333 15.1364 15.8128 15.7244 12.4941C15.8448 11.8143 15.2737 11.25 14.5833 11.25H9.99999C9.30966 11.25 8.74999 10.6903 8.74999 10V5.41666C8.74999 4.7263 8.18563 4.15512 7.50586 4.27556C4.18711 4.86357 1.66666 7.76243 1.66666 11.25C1.66666 15.162 4.83797 18.3333 8.74999 18.3333Z" />
+              <path
+                d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
+            </svg>
+          </span>
+          <span class="text">Dashboard</span>
+        </a>
+        <ul id="ddmenu_1" class="collapse show dropdown-nav">
+          <li>
+            <a href="index.html" class="active"> Erlli </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_products"
+          aria-controls="ddmenu_products"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.66666 4.16667C1.66666 3.24619 2.41285 2.5 3.33332 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V9.16667C18.3333 10.0872 17.5872 10.8333 16.6667 10.8333H3.33332C2.41285 10.8333 1.66666 10.0872 1.66666 9.16667V4.16667Z" />
+              <path
+                d="M1.875 13.75C1.875 13.4048 2.15483 13.125 2.5 13.125H17.5C17.8452 13.125 18.125 13.4048 18.125 13.75C18.125 14.0952 17.8452 14.375 17.5 14.375H2.5C2.15483 14.375 1.875 14.0952 1.875 13.75Z" />
+              <path
+                d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
+            </svg>
+          </span>
+          <span class="text">Products</span>
+        </a>
+        <ul id="ddmenu_products" class="collapse dropdown-nav">
+          <li>
+            <a href="view-products.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_users"
+          aria-controls="ddmenu_users"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.13401 12.5 0 14.2614 0 17.5V20H20V17.5C20 14.2614 13.866 12.5 10 12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Users</span>
+        </a>
+        <ul id="ddmenu_users" class="collapse dropdown-nav">
+          <li>
+            <a href="view-users.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_orders"
+          aria-controls="ddmenu_orders"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3.33334 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V15.8333C18.3333 16.7538 17.5872 17.5 16.6667 17.5H3.33334C2.41286 17.5 1.66667 16.7538 1.66667 15.8333V4.16667C1.66667 3.24619 2.41286 2.5 3.33334 2.5ZM6.66667 5.83333C6.32149 5.83333 6.04167 6.11316 6.04167 6.45833C6.04167 6.80351 6.32149 7.08333 6.66667 7.08333H13.3333C13.6785 7.08333 13.9583 6.80351 13.9583 6.45833C13.9583 6.11316 13.6785 5.83333 13.3333 5.83333H6.66667ZM6.66667 9.16667C6.32149 9.16667 6.04167 9.44649 6.04167 9.79167C6.04167 10.1368 6.32149 10.4167 6.66667 10.4167H10C10.3452 10.4167 10.625 10.1368 10.625 9.79167C10.625 9.44649 10.3452 9.16667 10 9.16667H6.66667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Orders</span>
+        </a>
+        <ul id="ddmenu_orders" class="collapse dropdown-nav">
+          <li>
+            <a href="view-orders.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_flash_sales"
+          aria-controls="ddmenu_flash_sales"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 2.5C10 1.57953 10.7462 0.833336 11.6667 0.833336H15.8333C16.7538 0.833336 17.5 1.57953 17.5 2.5V6.66667C17.5 7.58714 16.7538 8.33334 15.8333 8.33334H11.6667C10.7462 8.33334 10 7.58714 10 6.66667V2.5ZM2.5 11.6667C2.5 10.7462 3.24619 10 4.16667 10H8.33333C9.25381 10 10 10.7462 10 11.6667V15.8333C10 16.7538 9.25381 17.5 8.33333 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V11.6667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Flash Sales</span>
+        </a>
+        <ul id="ddmenu_flash_sales" class="collapse dropdown-nav">
+          <li>
+            <a href="view-flash-sales.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_categories"
+          aria-controls="ddmenu_categories"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.5 3.33334C2.5 2.41286 3.24619 1.66667 4.16667 1.66667H7.5C8.42048 1.66667 9.16667 2.41286 9.16667 3.33334V7.5C9.16667 8.42048 8.42048 9.16667 7.5 9.16667H4.16667C3.24619 9.16667 2.5 8.42048 2.5 7.5V3.33334ZM10.8333 3.33334C10.8333 2.41286 11.5795 1.66667 12.5 1.66667H15.8333C16.7538 1.66667 17.5 2.41286 17.5 3.33334V7.5C17.5 8.42048 16.7538 9.16667 15.8333 9.16667H12.5C11.5795 9.16667 10.8333 8.42048 10.8333 7.5V3.33334ZM4.16667 10.8333C3.24619 10.8333 2.5 11.5795 2.5 12.5V15.8333C2.5 16.7538 3.24619 17.5 4.16667 17.5H7.5C8.42048 17.5 9.16667 16.7538 9.16667 15.8333V12.5C9.16667 11.5795 8.42048 10.8333 7.5 10.8333H4.16667ZM12.5 10.8333C11.5795 10.8333 10.8333 11.5795 10.8333 12.5V15.8333C10.8333 16.7538 11.5795 17.5 12.5 17.5H15.8333C16.7538 17.5 17.5 16.7538 17.5 15.8333V12.5C17.5 11.5795 16.7538 10.8333 15.8333 10.8333H12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Categories</span>
+        </a>
+        <ul id="ddmenu_categories" class="collapse dropdown-nav">
+          <li>
+            <a href="view-categories.html"> View </a>
+          </li>
+          <li>
+            <a href="view-categories.html"> Add </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_notifications"
+          aria-controls="ddmenu_notifications"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2C7.79086 2 6 3.79086 6 6V10C6 12.2091 7.79086 14 10 14C12.2091 14 14 12.2091 14 10V6C14 3.79086 12.2091 2 10 2ZM10 16C8.89543 16 8 16.8954 8 18C8 19.1046 8.89543 20 10 20C11.1046 20 12 19.1046 12 18C12 16.8954 11.1046 16 10 16Z" />
+            </svg>
+          </span>
+          <span class="text">Notifications</span>
+        </a>
+        <ul id="ddmenu_notifications" class="collapse dropdown-nav">
+          <li>
+            <a href="view-notifications.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <span class="divider"><hr /></span>
+      <li class="nav-item">
+        <a href="#" id="logoutBtn">
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.3333 14.1667L16.6667 10.8333M16.6667 10.8333L13.3333 7.5M16.6667 10.8333H6.66667M10 14.1667C10 15.5475 8.88071 16.6667 7.5 16.6667C6.11929 16.6667 5 15.5475 5 14.1667V5.83333C5 4.45262 6.11929 3.33333 7.5 3.33333C8.88071 3.33333 10 4.45262 10 5.83333" stroke="#4A6CF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+       <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-6">
+          <div class="header-left d-flex align-items-center">
+            <div class="menu-toggle-btn mr-15">
+              <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                <i class="lni lni-chevron-left me-2"></i> Menu
+              </button>
+            </div>
+            <div class="header-search d-none d-md-flex">
+              <form action="#">
+                <input type="text" placeholder="Search..." />
+                <button><i class="lni lni-search-alt"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-6">
+          <div class="header-right">
+            <div class="header-message-box ml-15 d-none d-md-flex">
+              <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.74866 5.97421C7.91444 5.96367 8.08162 5.95833 8.25005 5.95833C12.5532 5.95833 16.0417 9.4468 16.0417 13.75C16.0417 13.9184 16.0364 14.0856 16.0259 14.2514C16.3246 14.138 16.6127 14.003 16.8883 13.8482L19.2306 14.629C19.7858 14.8141 20.3141 14.2858 20.129 13.7306L19.3482 11.3882C19.8694 10.4604 20.1667 9.38996 20.1667 8.25C20.1667 4.70617 17.2939 1.83333 13.75 1.83333C11.0077 1.83333 8.66702 3.55376 7.74866 5.97421Z" fill="" />
+                  <path d="M14.6667 13.75C14.6667 17.2938 11.7939 20.1667 8.25004 20.1667C7.11011 20.1667 6.03962 19.8694 5.11182 19.3482L2.76946 20.129C2.21421 20.3141 1.68597 19.7858 1.87105 19.2306L2.65184 16.8882C2.13062 15.9604 1.83338 14.89 1.83338 13.75C1.83338 10.2062 4.70622 7.33333 8.25004 7.33333C11.7939 7.33333 14.6667 10.2062 14.6667 13.75ZM5.95838 13.75C5.95838 13.2437 5.54797 12.8333 5.04171 12.8333C4.53545 12.8333 4.12504 13.2437 4.12504 13.75C4.12504 14.2563 4.53545 14.6667 5.04171 14.6667C5.54797 14.6667 5.95838 14.2563 5.95838 13.75ZM9.16671 13.75C9.16671 13.2437 8.7563 12.8333 8.25004 12.8333C7.74379 12.8333 7.33338 13.2437 7.33338 13.75C7.33338 14.2563 7.74379 14.6667 8.25004 14.6667C8.7563 14.6667 9.16671 14.2563 9.16671 13.75ZM11.4584 14.6667C11.9647 14.6667 12.375 14.2563 12.375 13.75C12.375 13.2437 11.9647 12.8333 11.4584 12.8333C10.9521 12.8333 10.5417 13.2437 10.5417 13.75C10.5417 14.2563 10.9521 14.6667 11.4584 14.6667Z" fill="" />
+                </svg>
+                <h5 id="unreadMessagesCount"></h5>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message" id="messagesDropdown">
+                <li id="noMessagesPlaceholder">
+                  <div class="content text-center">
+                    <p>No messages available</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile-box ml-15">
+              <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="profile-info">
+                  <div class="info">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div>
+                      <h6 class="fw-500" id="profile-name">Admin</h6>
+                      <p>Admin</p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                <li>
+                  <div class="author-info flex items-center !p-1">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="dropdown-profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="content">
+                      <h4 class="text-sm" id="dropdown-profile-name">Admin</h4>
+                      <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" id="dropdown-profile-email" href="#">Email not set</a>
+                    </div>
+                  </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="view-profile.html">
+                    <i class="lni lni-user"></i> View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="messages.html"> <i class="lni lni-inbox"></i> Messages </a>
+                </li>
+                <li>
+                  <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#0" id="logoutBtn"> <i class="lni lni-exit"></i> Sign Out </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+      <!-- ========== header end ========== -->
+
+      <!-- ========== table components start ========== -->
+      <section class="table-components">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+          <!-- ========== title-wrapper start ========== -->
+<div class="title-wrapper pt-30">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="title">
+        <h2>Products</h2>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="breadcrumb-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="index.html">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Products
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- Toolbar for Filters -->
+  <div class="filter-toolbar mb-20">
+    <div class="row align-items-center">
+      <div class="col-md-4">
+        <div class="select-style-1">
+          <label for="categoryFilter">Category</label>
+          <div class="select-position">
+            <select id="categoryFilter">
+              <option value="">All Categories</option>
+              <!-- Categories will be populated here -->
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="select-style-1">
+          <label for="subcategoryFilter">Subcategory</label>
+          <div class="select-position">
+            <select id="subcategoryFilter">
+              <option value="">All Subcategories</option>
+              <!-- Subcategories will be populated here -->
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <div class="form-check form-switch toggle-switch mb-0">
+          <input class="form-check-input" type="checkbox" id="filterToggle" checked />
+          <label class="form-check-label" for="filterToggle">Enable Filters</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end mb-20">
+  <button id="addToFlashSaleBtn" class="main-btn btn-hover" style="display: none;">Add to Flash Sale</button>
+</div>
+<!-- Add to Flash Sale Modal -->
+<div class="modal fade" id="addToFlashSaleModal" tabindex="-1" aria-labelledby="addToFlashSaleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToFlashSaleModalLabel">Add Products to Flash Sale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-style mb-30">
+          <h6 id="flashSaleName">Flash Sale: Loading...</h6>
+          <div id="selectedProductsContainer">
+            <!-- Selected products will be dynamically added here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="saveFlashSaleProductsBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex justify-content-end mb-20">
+  <button id="addToFlashSaleBtn" class="main-btn btn-hover" style="display: none;">Add to Flash Sale</button>
+</div>
+<!-- Add to Flash Sale Modal -->
+<div class="modal fade" id="addToFlashSaleModal" tabindex="-1" aria-labelledby="addToFlashSaleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToFlashSaleModalLabel">Add Products to Flash Sale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-style mb-30">
+          <h6 id="flashSaleName">Flash Sale: Loading...</h6>
+          <div id="selectedProductsContainer">
+            <!-- Selected products will be dynamically added here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="saveFlashSaleProductsBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ========== title-wrapper end ========== -->
+          <!-- ========== title-wrapper end ========== -->
+<div class="d-flex justify-content-end mb-20">
+  <button id="addToFlashSaleBtn" class="main-btn btn-hover" style="display: none;">Add to Flash Sale</button>
+</div>
+<!-- Add to Flash Sale Modal -->
+<div class="modal fade" id="addToFlashSaleModal" tabindex="-1" aria-labelledby="addToFlashSaleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addToFlashSaleModalLabel">Add Products to Flash Sale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-style mb-30">
+          <h6 id="flashSaleName">Flash Sale: Loading...</h6>
+          <div id="selectedProductsContainer">
+            <!-- Selected products will be dynamically added here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="saveFlashSaleProductsBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+          <!-- ========== tables-wrapper start ========== -->
+          <div class="tables-wrapper">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="card-style mb-30">
+                  <h6 class="mb-10">Data Table</h6>
+                  
+                  <div class="table-wrapper table-responsive">
+<table class="table striped-table">
+  <thead>
+    <tr>
+      <th></th>
+      <th><h6>ID</h6></th>
+      <th><h6>Image</h6></th>
+      <th><h6>Name</h6></th>
+      <th><h6>Description</h6></th>
+      <th><h6>Price</h6></th>
+      <th><h6>Category</h6></th>
+      <th><h6>Subcategory</h6></th>
+      <th><h6>Gender</h6></th>
+      <th><h6>Size</h6></th>
+      <th><h6>Color</h6></th>
+      <th><h6>Stock Quantity</h6></th>
+      <th><h6>Likes</h6></th>
+      <th><h6>Views</h6></th>
+      <th><h6>Vendor</h6></th>
+      <th><h6>Action</h6></th>
+    </tr>
+  </thead>
+  <tbody id="productsTable">
+    <tr id="loadingRow">
+      <td colspan="16" class="text-center">Loading...</td>
+    </tr>
+  </tbody>
+</table>
+                  </div>
+                  <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;"></div>
+                  <div id="emptyMessage" class="alert alert-info mt-3" style="display: none;">
+                    No products found. Add products via the "Add" option.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ========== tables-wrapper end ========== -->
+        </div>
+      </section>
+      <!-- ========== table components end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Designed and Developed by
+                  <a href="https://plainadmin.com" rel="nofollow" target="_blank">
+                    PlainAdmin
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="terms d-flex justify-content-center justify-content-md-end">
+                <a href="#0" class="text-sm">Term & Conditions</a>
+                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+<script type="module">
+    (async () => {
+      function displayError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        if (errorMessage) {
+          errorMessage.textContent = message;
+          errorMessage.style.display = 'block';
+        }
+        const loadingRow = document.getElementById('loadingRow');
+        if (loadingRow) loadingRow.style.display = 'none';
+        const emptyMessage = document.getElementById('emptyMessage');
+        if (emptyMessage) emptyMessage.style.display = 'none';
+      }
+
+      function displayEmptyMessage() {
+        const emptyMessage = document.getElementById('emptyMessage');
+        if (emptyMessage) {
+          emptyMessage.textContent = 'No products found. Add products via the "Add" option.';
+          emptyMessage.style.display = 'block';
+        }
+        const loadingRow = document.getElementById('loadingRow');
+        if (loadingRow) loadingRow.style.display = 'none';
+      }
+
+      // Initialize Supabase
+      let supabase;
+      try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        supabase = createClient(
+          'https://dash.erlli.com/api',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU2MTcwMTMzLCJleHAiOjIwNzE1MzAxMzN9.Sik1a3Sg-6nokPU0DNKurbrYzjSaPfPaOXtnj2qjRdk'
+        );
+      } catch (error) {
+        displayError(`Failed to load Supabase client: ${error.message}`);
+        return;
+      }
+
+      // Check authentication and fetch admin data
+      async function checkAuth() {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return { isAuthenticated: false, adminData: null, userId: null };
+        }
+        try {
+          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+          if (sessionError || !session) {
+            window.location.href = 'signin.html';
+            return { isAuthenticated: false, adminData: null, userId: null };
+          }
+          const { data: adminData, error: adminError } = await supabase
+            .from('admins')
+            .select('id, name, logo, email')
+            .eq('id', session.user.id)
+            .single();
+          if (adminError) {
+            displayError(`Failed to fetch admin data: ${adminError.message}`);
+            await supabase.auth.signOut();
+            window.location.href = 'signin.html';
+            return { isAuthenticated: false, adminData: null, userId: null };
+          }
+          return { isAuthenticated: true, adminData, userId: session.user.id };
+        } catch (err) {
+          displayError(`Unexpected error: ${err.message}`);
+          window.location.href = 'signin.html';
+          return { isAuthenticated: false, adminData: null, userId: null };
+        }
+      }
+
+      // Fetch recent messages for the dropdown
+      async function fetchRecentMessages(userId) {
+        try {
+          const { data: conversations, error: convError } = await supabase
+            .from('admin_conversations')
+            .select(`
+              id,
+              admin1_id,
+              admin2_id,
+              admin1:admins!admin_conversations_admin1_id_fkey (name, logo),
+              admin2:admins!admin_conversations_admin2_id_fkey (name, logo)
+            `)
+            .or(`admin1_id.eq.${userId},admin2_id.eq.${userId}`);
+          if (convError) throw convError;
+          const conversationIds = conversations.map(conv => conv.id);
+          if (conversationIds.length === 0) {
+            return [];
+          }
+          const { data: messages, error: msgError } = await supabase
+            .from('admin_messages')
+            .select(`
+              id,
+              content,
+              created_at,
+              conversation_id,
+              sender_id,
+              admins!sender_id (name, logo)
+            `)
+            .in('conversation_id', conversationIds)
+            .order('created_at', { ascending: false })
+            .limit(3);
+          if (msgError) throw msgError;
+          const messagesWithDetails = messages.map(msg => {
+            const conversation = conversations.find(conv => conv.id === msg.conversation_id);
+            const otherAdmin = conversation.admin1_id === userId ? conversation.admin2 : conversation.admin1;
+            const senderName = msg.admins?.name || 'Unknown';
+            const senderLogo = msg.admins?.logo || 'assets/images/profile/profile-image.png';
+            const timeAgo = moment(msg.created_at).fromNow();
+            return {
+              id: msg.id,
+              conversation_id: msg.conversation_id,
+              sender_name: senderName,
+              sender_logo: senderLogo,
+              content: msg.content,
+              time_ago: timeAgo
+            };
+          });
+          return messagesWithDetails;
+        } catch (error) {
+          console.error('Error fetching recent messages:', error);
+          return [];
+        }
+      }
+
+      // Render messages in the dropdown
+      function renderMessagesDropdown(messages) {
+        const dropdown = document.getElementById('messagesDropdown');
+        const noMessagesPlaceholder = document.getElementById('noMessagesPlaceholder');
+        if (!dropdown) return;
+        dropdown.innerHTML = '';
+        if (messages.length === 0) {
+          noMessagesPlaceholder.style.display = 'block';
+          document.getElementById('unreadMessagesCount').textContent = '';
+          return;
+        }
+        noMessagesPlaceholder.style.display = 'none';
+        document.getElementById('unreadMessagesCount').textContent = messages.length > 0 ? messages.length : '';
+        messages.forEach(msg => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="messages.html">
+              <div class="image">
+                <img src="${msg.sender_logo}" alt="${msg.sender_name}" />
+              </div>
+              <div class="content">
+                <h6>${msg.sender_name}</h6>
+                <p>${msg.content.length > 50 ? msg.content.substring(0, 50) + '...' : msg.content}</p>
+                <span>${msg.time_ago}</span>
+              </div>
+            </a>
+          `;
+          dropdown.appendChild(li);
+        });
+      }
+
+      async function fetchCategories() {
+        try {
+          const { data, error } = await supabase
+            .from('categories')
+            .select('id, name')
+            .order('name', { ascending: true });
+          if (error) throw error;
+          return data;
+        } catch (error) {
+          displayError(`Error fetching categories: ${error.message}`);
+          return [];
+        }
+      }
+
+      async function fetchSubcategories(categoryId = null) {
+        try {
+          let query = supabase
+            .from('subcategories')
+            .select('id, name, category_id')
+            .order('name', { ascending: true });
+          if (categoryId) {
+            query = query.eq('category_id', categoryId);
+          }
+          const { data, error } = await query;
+          if (error) throw error;
+          return data;
+        } catch (error) {
+          displayError(`Error fetching subcategories: ${error.message}`);
+          return [];
+        }
+      }
+
+      async function populateCategoryFilter(selectedCategoryId = null) {
+        const categoryFilter = document.getElementById('categoryFilter');
+        if (!categoryFilter) return;
+        const categories = await fetchCategories();
+        categoryFilter.innerHTML = '<option value="">All Categories</option>';
+        categories.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category.id;
+          option.textContent = category.name;
+          if (category.id === selectedCategoryId) {
+            option.selected = true;
+          }
+          categoryFilter.appendChild(option);
+        });
+        categoryFilter.disabled = !document.getElementById('filterToggle').checked;
+      }
+
+      async function populateSubcategoryFilter(categoryId = null, selectedSubcategoryId = null) {
+        const subcategoryFilter = document.getElementById('subcategoryFilter');
+        if (!subcategoryFilter) return;
+        subcategoryFilter.innerHTML = '<option value="">All Subcategories</option>';
+        const subcategories = await fetchSubcategories(categoryId);
+        subcategories.forEach(subcategory => {
+          const option = document.createElement('option');
+          option.value = subcategory.id;
+          option.textContent = subcategory.name;
+          if (subcategory.id === selectedSubcategoryId) {
+            option.selected = true;
+          }
+          subcategoryFilter.appendChild(option);
+        });
+        subcategoryFilter.disabled = !document.getElementById('filterToggle').checked;
+      }
+
+      async function fetchActiveFlashSale() {
+        try {
+          const { data, error } = await supabase
+            .from('flash_sales')
+            .select('id, campaign_name, theme')
+            .gt('end_time', new Date().toISOString())
+            .single();
+          if (error) throw error;
+          return data;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      async function fetchProducts(categoryId = null, subcategoryId = null) {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return;
+        }
+        const filterToggle = document.getElementById('filterToggle');
+        const applyFilters = filterToggle ? filterToggle.checked : true;
+        const loadingRow = document.getElementById('loadingRow');
+        const errorMessage = document.getElementById('errorMessage');
+        const emptyMessage = document.getElementById('emptyMessage');
+        const tbody = document.getElementById('productsTable');
+        const addToFlashSaleBtn = document.getElementById('addToFlashSaleBtn');
+        try {
+          let query = supabase
+            .from('products')
+            .select(`
+              id,
+              name,
+              description,
+              price,
+              image_url,
+              gender,
+              size,
+              color,
+              material,
+              stock_quantity,
+              created_at,
+              updated_at,
+              likes_count,
+              views_count,
+              categories!products_category_id_fkey(name),
+              subcategories!products_subcategory_id_fkey(name),
+              profiles!products_vendor_id_fkey(first_name, last_name)
+            `);
+          if (applyFilters && categoryId) {
+            query = query.eq('category_id', categoryId);
+          }
+          if (applyFilters && subcategoryId) {
+            query = query.eq('subcategory_id', subcategoryId);
+          }
+          const { data, error } = await Promise.race([
+            query,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000))
+          ]);
+          if (error) throw error;
+          if (loadingRow) loadingRow.style.display = 'none';
+          if (emptyMessage) emptyMessage.style.display = 'none';
+          if (data.length === 0) {
+            if (emptyMessage) {
+              emptyMessage.textContent = 'No products found. Add products via the "Add" option.';
+              emptyMessage.style.display = 'block';
+            }
+            if (tbody) tbody.innerHTML = '';
+            if (addToFlashSaleBtn) addToFlashSaleBtn.style.display = 'none';
+            return;
+          }
+          // Fetch active flash sale for button styling
+          const activeFlashSale = await fetchActiveFlashSale();
+          if (activeFlashSale && addToFlashSaleBtn) {
+            addToFlashSaleBtn.classList.add(activeFlashSale.theme || 'primary');
+          } else if (addToFlashSaleBtn) {
+            addToFlashSaleBtn.style.display = 'none';
+          }
+          if (tbody) {
+            tbody.innerHTML = '';
+            data.forEach((product, index) => {
+              const row = `
+                <tr>
+                  <td>
+                    <div class="check-input-primary">
+                      <input class="form-check-input product-checkbox" type="checkbox" id="checkbox-${product.id}" data-product-id="${product.id}" data-product-name="${product.name || 'N/A'}" data-image-url="${product.image_url || 'https://via.placeholder.com/50'}">
+                    </div>
+                  </td>
+                  <td>${product.id}</td>
+                  <td><img src="${product.image_url || 'https://via.placeholder.com/50'}" alt="${product.name || 'Product'}" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                  <td>${product.name || 'N/A'}</td>
+                  <td>${product.description || 'N/A'}</td>
+                  <td>$${product.price ? product.price.toFixed(2) : '0.00'}</td>
+                  <td>${product.categories?.name || 'N/A'}</td>
+                  <td>${product.subcategories?.name || 'N/A'}</td>
+                  <td>${product.gender || 'N/A'}</td>
+                  <td>${Array.isArray(product.size) ? product.size.join(', ') : product.size || 'N/A'}</td>
+                  <td>${Array.isArray(product.color) ? product.color.join(', ') : product.color || 'N/A'}</td>
+                  <td>${product.stock_quantity || 0}</td>
+                  <td>${product.likes_count || 0}</td>
+                  <td>${product.views_count || 0}</td>
+                  <td>${product.profiles ? `${product.profiles.first_name || ''} ${product.profiles.last_name || ''}`.trim() || 'N/A' : 'N/A'}</td>
+                  <td>
+                    <div class="action">
+                      <a href="view-product-variations.html?id=${product.id}" class="text-primary">
+                        <i class="lni lni-eye"></i>
+                      </a>
+                      <a href="edit-product.html?id=${product.id}" class="text-primary ms-2">
+                        <i class="lni lni-pencil"></i>
+                      </a>
+                      <button class="text-danger delete-btn" data-id="${product.id}">
+                        <i class="lni lni-trash-can"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `;
+              tbody.innerHTML += row;
+            });
+            // Checkbox event listener to show/hide Add to Flash Sale button
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            checkboxes.forEach(checkbox => {
+              checkbox.addEventListener('change', () => {
+                const checkedCheckboxes = document.querySelectorAll('.product-checkbox:checked');
+                if (addToFlashSaleBtn && activeFlashSale) {
+                  addToFlashSaleBtn.style.display = checkedCheckboxes.length > 0 ? 'block' : 'none';
+                }
+              });
+            });
+            // Add to Flash Sale button click
+            if (addToFlashSaleBtn && activeFlashSale) {
+              addToFlashSaleBtn.addEventListener('click', () => {
+                const checkedCheckboxes = document.querySelectorAll('.product-checkbox:checked');
+                const selectedProducts = Array.from(checkedCheckboxes).map(checkbox => ({
+                  id: checkbox.dataset.productId,
+                  name: checkbox.dataset.productName,
+                  image_url: checkbox.dataset.imageUrl
+                }));
+                const flashSaleNameElement = document.getElementById('flashSaleName');
+                const selectedProductsContainer = document.getElementById('selectedProductsContainer');
+                if (flashSaleNameElement && selectedProductsContainer) {
+                  flashSaleNameElement.textContent = `Flash Sale: ${activeFlashSale.campaign_name || 'N/A'}`;
+                  selectedProductsContainer.innerHTML = '';
+                  selectedProducts.forEach(product => {
+                    const productItem = document.createElement('div');
+                    productItem.className = 'product-item';
+                    productItem.innerHTML = `
+                      <img src="${product.image_url}" alt="${product.name}">
+                      <div class="input-style-1">
+                        <label>${product.name}</label>
+                        <select name="discount-${product.id}" class="form-control" required>
+                          <option value="10">10%</option>
+                          <option value="20">20%</option>
+                          <option value="30">30%</option>
+                          <option value="40">40%</option>
+                          <option value="50">50%</option>
+                        </select>
+                      </div>
+                    `;
+                    selectedProductsContainer.appendChild(productItem);
+                  });
+                  const modal = new bootstrap.Modal(document.getElementById('addToFlashSaleModal'));
+                  modal.show();
+                }
+              });
+            }
+            // Save selected products to flash sale
+            const saveFlashSaleProductsBtn = document.getElementById('saveFlashSaleProductsBtn');
+            if (saveFlashSaleProductsBtn && activeFlashSale) {
+              saveFlashSaleProductsBtn.addEventListener('click', async () => {
+                const checkedCheckboxes = document.querySelectorAll('.product-checkbox:checked');
+                const selectedProducts = Array.from(checkedCheckboxes).map(checkbox => ({
+                  product_id: checkbox.dataset.productId,
+                  discount_percentage: document.querySelector(`select[name="discount-${checkbox.dataset.productId}"]`)?.value
+                }));
+                try {
+                  const { error } = await supabase
+                    .from('flash_sale_products')
+                    .insert(
+                      selectedProducts.map(product => ({
+                        flash_sale_id: activeFlashSale.id,
+                        product_id: product.product_id,
+                        discount_percentage: parseInt(product.discount_percentage)
+                      }))
+                    );
+                  if (error) throw error;
+                  const modal = bootstrap.Modal.getInstance(document.getElementById('addToFlashSaleModal'));
+                  modal.hide();
+                  // Uncheck all checkboxes
+                  document.querySelectorAll('.product-checkbox').forEach(checkbox => {
+                    checkbox.checked = false;
+                  });
+                  if (addToFlashSaleBtn) {
+                    addToFlashSaleBtn.style.display = 'none';
+                  }
+                  fetchProducts(categoryId, subcategoryId); // Refresh with current filters
+                } catch (error) {
+                  displayError(`Error adding products to flash sale: ${error.message}`);
+                }
+              });
+            }
+            // Delete button event listeners
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+              btn.addEventListener('click', async (e) => {
+                const id = e.currentTarget.dataset.id;
+                if (confirm(`Are you sure you want to delete product ID ${id}?`)) {
+                  try {
+                    const { error } = await supabase.from('products').delete().eq('id', id);
+                    if (error) throw error;
+                    fetchProducts(categoryId, subcategoryId); // Refresh with current filters
+                  } catch (deleteError) {
+                    displayError(`Error deleting product: ${deleteError.message}`);
+                  }
+                }
+              });
+            });
+          }
+        } catch (error) {
+          if (loadingRow) loadingRow.style.display = 'none';
+          displayError(`Error fetching products: ${error.message}`);
+        }
+      }
+
+      // Setup filter event listeners
+      function setupFilters() {
+        const categoryFilter = document.getElementById('categoryFilter');
+        const subcategoryFilter = document.getElementById('subcategoryFilter');
+        const filterToggle = document.getElementById('filterToggle');
+        if (categoryFilter) {
+          categoryFilter.addEventListener('change', async () => {
+            if (!filterToggle.checked) return;
+            const categoryId = categoryFilter.value;
+            await populateSubcategoryFilter(categoryId);
+            await fetchProducts(categoryId, subcategoryFilter.value);
+          });
+        }
+        if (subcategoryFilter) {
+          subcategoryFilter.addEventListener('change', () => {
+            if (!filterToggle.checked) return;
+            const categoryId = categoryFilter.value;
+            const subcategoryId = subcategoryFilter.value;
+            fetchProducts(categoryId, subcategoryId);
+          });
+        }
+        if (filterToggle) {
+          filterToggle.addEventListener('change', async () => {
+            const isFiltering = filterToggle.checked;
+            categoryFilter.disabled = !isFiltering;
+            subcategoryFilter.disabled = !isFiltering;
+            if (isFiltering) {
+              await fetchProducts(categoryFilter.value, subcategoryFilter.value);
+            } else {
+              categoryFilter.value = '';
+              subcategoryFilter.innerHTML = '<option value="">All Subcategories</option>';
+              await fetchProducts();
+            }
+          });
+        }
+      }
+
+      // Handle URL parameters for pre-selecting filters
+      async function handleUrlFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const categoryId = urlParams.get('category_id');
+        const subcategoryId = urlParams.get('subcategory_id');
+        const filterToggle = document.getElementById('filterToggle');
+        if (categoryId || subcategoryId) {
+          filterToggle.checked = true; // Ensure toggle is on when URL params are present
+          await populateCategoryFilter(categoryId);
+          await populateSubcategoryFilter(categoryId, subcategoryId);
+          await fetchProducts(categoryId, subcategoryId);
+        } else {
+          await populateCategoryFilter();
+          await populateSubcategoryFilter();
+          await fetchProducts();
+        }
+      }
+
+      // Initialize page
+      const { isAuthenticated, adminData, userId } = await checkAuth();
+      if (!isAuthenticated) return;
+
+      // Update header with admin data
+      if (adminData) {
+        document.getElementById('profile-name').textContent = adminData.name || 'Admin';
+        document.getElementById('dropdown-profile-name').textContent = adminData.name || 'Admin';
+        document.getElementById('dropdown-profile-email').textContent = adminData.email || 'Email not set';
+        if (adminData.logo) {
+          document.getElementById('profile-image').src = adminData.logo;
+          document.getElementById('dropdown-profile-image').src = adminData.logo;
+        }
+      }
+
+      // Populate messages dropdown
+      const messages = await fetchRecentMessages(userId);
+      renderMessagesDropdown(messages);
+
+      // Handle logout
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          try {
+            if (supabase) {
+              const { error } = await supabase.auth.signOut();
+              if (error) throw error;
+            }
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = 'signin.html';
+          } catch (error) {
+            displayError(`Logout failed: ${error.message}`);
+          }
+        });
+      }
+
+      await handleUrlFilters();
+      setupFilters();
+    })();
+  </script>
+  </body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+    <title>Sign In | PlainAdmin Demo</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+  </head>
+  <body>
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <main class="main-wrapper">
+      <section class="signin-section">
+        <div class="container-fluid">
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>Sign in</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row g-0 auth-row">
+            <div class="col-lg-6">
+              <div class="auth-cover-wrapper bg-primary-100">
+                <div class="auth-cover">
+                  <div class="title text-center">
+                    <h1 class="text-primary mb-10">Welcome Back</h1>
+                    <p class="text-medium">
+                      Sign in to your admin account to continue
+                    </p>
+                  </div>
+                  <div class="cover-image">
+                    <img src="assets/images/auth/signin-image.svg" alt="" />
+                  </div>
+                  <div class="shape-image">
+                    <img src="assets/images/auth/shape.svg" alt="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="signin-wrapper">
+                <div class="form-wrapper">
+                  <h6 class="mb-15">Admin Sign In</h6>
+                  <p class="text-sm mb-25">
+                    Access the admin dashboard to manage your eCommerce platform.
+                  </p>
+                  <form id="signinForm">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Email</label>
+                          <input type="email" id="username" placeholder="Enter your email" required />
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Password</label>
+                          <input type="password" id="password" placeholder="Password" required />
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;"></div>
+                      </div>
+                      <div class="col-12">
+                        <div class="button-group d-flex justify-content-center flex-wrap">
+                          <button type="submit" class="main-btn primary-btn btn-hover w-100 text-center">
+                            Sign In
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6 order-last order-md-first">
+            <div class="copyright text-center text-md-start">
+              <p class="text-sm">
+                Designed and Developed by
+                <a href="https://plainadmin.com" rel="nofollow" target="_blank">PlainAdmin</a>
+              </p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="terms d-flex justify-content-center justify-content-md-end">
+              <a href="#0" class="text-sm">Term & Conditions</a>
+              <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+      (async () => {
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+  const supabaseUrl = 'https://dash.erlli.com/api';
+  const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU2MTcwMTMzLCJleHAiOjIwNzE1MzAxMzN9.Sik1a3Sg-6nokPU0DNKurbrYzjSaPfPaOXtnj2qjRdk';
+  const supabase = createClient(supabaseUrl, supabaseAnonKey);
+  document.getElementById('signinForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    const errorMessage = document.getElementById('errorMessage');
+    try {
+      const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (authError) {
+        errorMessage.textContent = authError.message;
+        errorMessage.style.display = 'block';
+        console.error('Auth error:', authError);
+        return;
+      }
+      console.log('Authenticated user ID:', authData.user.id);
+      const adminResponse = await fetch(`${supabaseUrl}/rest/v1/admins?select=id&id=eq.${authData.user.id}`, {
+        method: 'GET',
+        headers: {
+          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${authData.session.access_token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      const adminData = await adminResponse.json();
+      console.log('Admin query result:', adminData, 'Status:', adminResponse.status);
+      if (adminResponse.status !== 200 || adminData.length === 0) {
+        errorMessage.textContent = 'Access denied: Not an admin account';
+        errorMessage.style.display = 'block';
+        console.error('Admin check failed: No admin record found');
+        await supabase.auth.signOut();
+        return;
+      }
+      await supabase
+        .from('admins')
+        .update({ last_login: new Date().toISOString() })
+        .eq('id', authData.user.id);
+      errorMessage.style.display = 'none';
+      window.location.href = 'index.html';
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      errorMessage.textContent = 'An unexpected error occurred: ' + err.message;
+      errorMessage.style.display = 'block';
+    }
+  });
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    console.log('Existing session user ID:', session.user.id);
+    const sessionAdminResponse = await fetch(`${supabaseUrl}/rest/v1/admins?select=id&id=eq.${session.user.id}`, {
+      method: 'GET',
+      headers: {
+        'apikey': supabaseAnonKey,
+        'Authorization': `Bearer ${session.access_token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const sessionAdminData = await sessionAdminResponse.json();
+    console.log('Session admin check:', sessionAdminData, 'Status:', sessionAdminResponse.status);
+    if (sessionAdminResponse.status === 200 && sessionAdminData.length > 0) {
+      window.location.href = 'index.html';
+    } else {
+      await supabase.auth.signOut();
+    }
+  }
+})();
+    </script>
+  </body>
+</html>

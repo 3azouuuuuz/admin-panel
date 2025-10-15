@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+    <title>View Profile | PlainAdmin Demo</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+  .profile-image {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  #invite-result .input-group {
+    margin-top: 10px;
+  }
+  #invite-link {
+    background-color: #f8f9fa;
+    cursor: text;
+  }
+  #copy-invite-btn {
+    transition: all 0.3s ease;
+  }
+  #copy-invite-btn:hover {
+    background-color: #4A6CF7;
+    color: white;
+  }
+  .alert-success {
+    background-color: #f0f9f0;
+    border-color: #d1e7dd;
+    color: #0f5132;
+  }
+    .profile-box .image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .profile-box .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .author-info .image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  .author-info .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .placeholder-img {
+    width: 100%;
+    height: 100%;
+    background: #f0f0f0;
+    color: #6c757d;
+    font-size: 16px;
+    cursor: pointer;
+    background-size: cover;
+    background-position: center;
+  }
+  .placeholder-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .placeholder-img.has-image {
+    line-height: normal;
+  }
+  .placeholder-img:hover {
+    background: #e0e0e0;
+  }
+  .update-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .update-image input {
+    display: none;
+  }
+  .update-image label {
+    cursor: pointer;
+    font-size: 14px;
+    color: #4A6CF7;
+    line-height: 1;
+  }
+  .update-image:hover {
+    background: #f0f0f0;
+  }
+</style>
+  </head>
+  <body>
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <aside class="sidebar-nav-wrapper">
+  <div class="navbar-logo">
+    <a href="index.html">
+      <img src="assets/images/logo/logo.svg" alt="logo" />
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_1"
+          aria-controls="ddmenu_1"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.74999 18.3333C12.2376 18.3333 15.1364 15.8128 15.7244 12.4941C15.8448 11.8143 15.2737 11.25 14.5833 11.25H9.99999C9.30966 11.25 8.74999 10.6903 8.74999 10V5.41666C8.74999 4.7263 8.18563 4.15512 7.50586 4.27556C4.18711 4.86357 1.66666 7.76243 1.66666 11.25C1.66666 15.162 4.83797 18.3333 8.74999 18.3333Z" />
+              <path
+                d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
+            </svg>
+          </span>
+          <span class="text">Dashboard</span>
+        </a>
+        <ul id="ddmenu_1" class="collapse show dropdown-nav">
+          <li>
+            <a href="index.html" class="active"> Erlli </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_products"
+          aria-controls="ddmenu_products"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.66666 4.16667C1.66666 3.24619 2.41285 2.5 3.33332 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V9.16667C18.3333 10.0872 17.5872 10.8333 16.6667 10.8333H3.33332C2.41285 10.8333 1.66666 10.0872 1.66666 9.16667V4.16667Z" />
+              <path
+                d="M1.875 13.75C1.875 13.4048 2.15483 13.125 2.5 13.125H17.5C17.8452 13.125 18.125 13.4048 18.125 13.75C18.125 14.0952 17.8452 14.375 17.5 14.375H2.5C2.15483 14.375 1.875 14.0952 1.875 13.75Z" />
+              <path
+                d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
+            </svg>
+          </span>
+          <span class="text">Products</span>
+        </a>
+        <ul id="ddmenu_products" class="collapse dropdown-nav">
+          <li>
+            <a href="view-products.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_users"
+          aria-controls="ddmenu_users"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.13401 12.5 0 14.2614 0 17.5V20H20V17.5C20 14.2614 13.866 12.5 10 12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Users</span>
+        </a>
+        <ul id="ddmenu_users" class="collapse dropdown-nav">
+          <li>
+            <a href="view-users.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_orders"
+          aria-controls="ddmenu_orders"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3.33334 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V15.8333C18.3333 16.7538 17.5872 17.5 16.6667 17.5H3.33334C2.41286 17.5 1.66667 16.7538 1.66667 15.8333V4.16667C1.66667 3.24619 2.41286 2.5 3.33334 2.5ZM6.66667 5.83333C6.32149 5.83333 6.04167 6.11316 6.04167 6.45833C6.04167 6.80351 6.32149 7.08333 6.66667 7.08333H13.3333C13.6785 7.08333 13.9583 6.80351 13.9583 6.45833C13.9583 6.11316 13.6785 5.83333 13.3333 5.83333H6.66667ZM6.66667 9.16667C6.32149 9.16667 6.04167 9.44649 6.04167 9.79167C6.04167 10.1368 6.32149 10.4167 6.66667 10.4167H10C10.3452 10.4167 10.625 10.1368 10.625 9.79167C10.625 9.44649 10.3452 9.16667 10 9.16667H6.66667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Orders</span>
+        </a>
+        <ul id="ddmenu_orders" class="collapse dropdown-nav">
+          <li>
+            <a href="view-orders.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_flash_sales"
+          aria-controls="ddmenu_flash_sales"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 2.5C10 1.57953 10.7462 0.833336 11.6667 0.833336H15.8333C16.7538 0.833336 17.5 1.57953 17.5 2.5V6.66667C17.5 7.58714 16.7538 8.33334 15.8333 8.33334H11.6667C10.7462 8.33334 10 7.58714 10 6.66667V2.5ZM2.5 11.6667C2.5 10.7462 3.24619 10 4.16667 10H8.33333C9.25381 10 10 10.7462 10 11.6667V15.8333C10 16.7538 9.25381 17.5 8.33333 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V11.6667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Flash Sales</span>
+        </a>
+        <ul id="ddmenu_flash_sales" class="collapse dropdown-nav">
+          <li>
+            <a href="view-flash-sales.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_categories"
+          aria-controls="ddmenu_categories"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.5 3.33334C2.5 2.41286 3.24619 1.66667 4.16667 1.66667H7.5C8.42048 1.66667 9.16667 2.41286 9.16667 3.33334V7.5C9.16667 8.42048 8.42048 9.16667 7.5 9.16667H4.16667C3.24619 9.16667 2.5 8.42048 2.5 7.5V3.33334ZM10.8333 3.33334C10.8333 2.41286 11.5795 1.66667 12.5 1.66667H15.8333C16.7538 1.66667 17.5 2.41286 17.5 3.33334V7.5C17.5 8.42048 16.7538 9.16667 15.8333 9.16667H12.5C11.5795 9.16667 10.8333 8.42048 10.8333 7.5V3.33334ZM4.16667 10.8333C3.24619 10.8333 2.5 11.5795 2.5 12.5V15.8333C2.5 16.7538 3.24619 17.5 4.16667 17.5H7.5C8.42048 17.5 9.16667 16.7538 9.16667 15.8333V12.5C9.16667 11.5795 8.42048 10.8333 7.5 10.8333H4.16667ZM12.5 10.8333C11.5795 10.8333 10.8333 11.5795 10.8333 12.5V15.8333C10.8333 16.7538 11.5795 17.5 12.5 17.5H15.8333C16.7538 17.5 17.5 16.7538 17.5 15.8333V12.5C17.5 11.5795 16.7538 10.8333 15.8333 10.8333H12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Categories</span>
+        </a>
+        <ul id="ddmenu_categories" class="collapse dropdown-nav">
+          <li>
+            <a href="view-categories.html"> View </a>
+          </li>
+          <li>
+            <a href="view-categories.html"> Add </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_notifications"
+          aria-controls="ddmenu_notifications"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2C7.79086 2 6 3.79086 6 6V10C6 12.2091 7.79086 14 10 14C12.2091 14 14 12.2091 14 10V6C14 3.79086 12.2091 2 10 2ZM10 16C8.89543 16 8 16.8954 8 18C8 19.1046 8.89543 20 10 20C11.1046 20 12 19.1046 12 18C12 16.8954 11.1046 16 10 16Z" />
+            </svg>
+          </span>
+          <span class="text">Notifications</span>
+        </a>
+        <ul id="ddmenu_notifications" class="collapse dropdown-nav">
+          <li>
+            <a href="view-notifications.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <span class="divider"><hr /></span>
+      <li class="nav-item">
+        <a href="#" id="logoutBtn">
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.3333 14.1667L16.6667 10.8333M16.6667 10.8333L13.3333 7.5M16.6667 10.8333H6.66667M10 14.1667C10 15.5475 8.88071 16.6667 7.5 16.6667C6.11929 16.6667 5 15.5475 5 14.1667V5.83333C5 4.45262 6.11929 3.33333 7.5 3.33333C8.88071 3.33333 10 4.45262 10 5.83333" stroke="#4A6CF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+    <div class="overlay"></div>
+    <main class="main-wrapper">
+     <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-6">
+          <div class="header-left d-flex align-items-center">
+            <div class="menu-toggle-btn mr-15">
+              <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                <i class="lni lni-chevron-left me-2"></i> Menu
+              </button>
+            </div>
+            <div class="header-search d-none d-md-flex">
+              <form action="#">
+                <input type="text" placeholder="Search..." />
+                <button><i class="lni lni-search-alt"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-6">
+          <div class="header-right">
+            <div class="header-message-box ml-15 d-none d-md-flex">
+              <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.74866 5.97421C7.91444 5.96367 8.08162 5.95833 8.25005 5.95833C12.5532 5.95833 16.0417 9.4468 16.0417 13.75C16.0417 13.9184 16.0364 14.0856 16.0259 14.2514C16.3246 14.138 16.6127 14.003 16.8883 13.8482L19.2306 14.629C19.7858 14.8141 20.3141 14.2858 20.129 13.7306L19.3482 11.3882C19.8694 10.4604 20.1667 9.38996 20.1667 8.25C20.1667 4.70617 17.2939 1.83333 13.75 1.83333C11.0077 1.83333 8.66702 3.55376 7.74866 5.97421Z" fill="" />
+                  <path d="M14.6667 13.75C14.6667 17.2938 11.7939 20.1667 8.25004 20.1667C7.11011 20.1667 6.03962 19.8694 5.11182 19.3482L2.76946 20.129C2.21421 20.3141 1.68597 19.7858 1.87105 19.2306L2.65184 16.8882C2.13062 15.9604 1.83338 14.89 1.83338 13.75C1.83338 10.2062 4.70622 7.33333 8.25004 7.33333C11.7939 7.33333 14.6667 10.2062 14.6667 13.75ZM5.95838 13.75C5.95838 13.2437 5.54797 12.8333 5.04171 12.8333C4.53545 12.8333 4.12504 13.2437 4.12504 13.75C4.12504 14.2563 4.53545 14.6667 5.04171 14.6667C5.54797 14.6667 5.95838 14.2563 5.95838 13.75ZM9.16671 13.75C9.16671 13.2437 8.7563 12.8333 8.25004 12.8333C7.74379 12.8333 7.33338 13.2437 7.33338 13.75C7.33338 14.2563 7.74379 14.6667 8.25004 14.6667C8.7563 14.6667 9.16671 14.2563 9.16671 13.75ZM11.4584 14.6667C11.9647 14.6667 12.375 14.2563 12.375 13.75C12.375 13.2437 11.9647 12.8333 11.4584 12.8333C10.9521 12.8333 10.5417 13.2437 10.5417 13.75C10.5417 14.2563 10.9521 14.6667 11.4584 14.6667Z" fill="" />
+                </svg>
+                <h5 id="unreadMessagesCount"></h5>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message" id="messagesDropdown">
+                <li id="noMessagesPlaceholder">
+                  <div class="content text-center">
+                    <p>No messages available</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile-box ml-15">
+              <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="profile-info">
+                  <div class="info">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div>
+                      <h6 class="fw-500" id="profile-name">Admin</h6>
+                      <p>Admin</p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                <li>
+                  <div class="author-info flex items-center !p-1">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="dropdown-profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="content">
+                      <h4 class="text-sm" id="dropdown-profile-name">Admin</h4>
+                      <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" id="dropdown-profile-email" href="#">Email not set</a>
+                    </div>
+                  </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="view-profile.html" class="active">
+                    <i class="lni lni-user"></i> View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="messages.html"> <i class="lni lni-inbox"></i> Messages </a>
+                </li>
+                <li>
+                  <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#0" id="logoutBtn"> <i class="lni lni-exit"></i> Sign Out </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+      <section class="section">
+        <div class="container-fluid">
+          <div class="title-wrapper pt-30">
+            <div class="row align-items-center">
+              <div class="col-md-6">
+                <div class="title">
+                  <h2>Profile</h2>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="breadcrumb-wrapper">
+                  <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item">
+                        <a href="index.html">Dashboard</a>
+                      </li>
+                      <li class="breadcrumb-item"><a href="#0">Pages</a></li>
+                      <li class="breadcrumb-item active" aria-current="page">
+                        View Profile
+                      </li>
+                    </ol>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+  <!-- Left Column (Existing Profile Section) -->
+  <div class="col-lg-6">
+    <div class="card-style settings-card-1 mb-30">
+      <div class="title mb-30 d-flex justify-content-between align-items-center">
+        <h6>My Profile</h6>
+        <button class="border-0 bg-transparent" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+          <i class="lni lni-pencil-alt"></i>
+        </button>
+      </div>
+      <div class="profile-info">
+        <div class="d-flex align-items-center mb-30">
+          <div class="profile-image">
+            <div class="placeholder-img d-flex align-items-center justify-content-center" id="profileImagePlaceholder">
+              <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="profile-image-section" />
+            </div>
+            <div class="update-image">
+              <input type="file" id="profileImageInput" class="hidden-file-input" accept="image/*" />
+              <label for="profileImageInput"><i class="lni lni-cloud-upload"></i></label>
+            </div>
+          </div>
+          <div class="profile-meta">
+            <h5 class="text-bold text-dark mb-10" id="profile-name-section">Admin</h5>
+            <p class="text-sm text-gray">Administrator</p>
+          </div>
+        </div>
+        <div class="input-style-1">
+          <label>Email</label>
+          <input type="email" id="profile-email-section" value="Email not set" readonly />
+        </div>
+        <div class="input-style-1">
+          <label>Bio</label>
+          <textarea id="profile-bio-section" rows="4" readonly>Not set</textarea>
+        </div>
+        <div class="input-style-1">
+          <label>Address</label>
+          <input type="text" id="profile-address-section" value="Not set" readonly />
+        </div>
+        <div class="input-style-1">
+          <label>City</label>
+          <input type="text" id="profile-city-section" value="Not set" readonly />
+        </div>
+        <div class="input-style-1">
+          <label>Zip Code</label>
+          <input type="text" id="profile-zip-code-section" value="Not set" readonly />
+        </div>
+        <div class="input-style-1">
+          <label>Country</label>
+          <input type="text" id="profile-country-section" value="Not set" readonly />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column (New Invitation Section) -->
+<div class="col-lg-6">
+  <div class="card-style settings-card-1 mb-30">
+    <div class="title mb-30">
+      <h6>Generate Admin Invitation</h6>
+    </div>
+    <div class="profile-info">
+      <div class="input-style-1">
+        <label>Invitee Email (Optional)</label>
+        <input type="email" id="invite-email" placeholder="Enter invitee's email (optional)" />
+      </div>
+      <div class="input-style-1">
+        <label>Invitation Expiry</label>
+        <select id="invite-expiry" class="form-select">
+          <option value="1">1 day</option>
+          <option value="7" selected>7 days</option>
+          <option value="30">30 days</option>
+          <option value="0">Never expire</option>
+        </select>
+      </div>
+      <div class="input-style-1">
+        <label>Custom Message (Optional)</label>
+        <textarea id="invite-message" rows="3" placeholder="Add a welcome message for the new admin"></textarea>
+      </div>
+      <button id="generate-invite-btn" class="main-btn primary-btn btn-hover w-100">
+        Generate Invitation Link
+      </button>
+      <div id="invite-result" class="mt-30" style="display: none;">
+        <div class="alert alert-success">
+          <h6 class="text-bold mb-10">Invitation Generated Successfully!</h6>
+          <p>Copy this link to share with the new admin:</p>
+          <div class="input-group mb-3">
+            <input type="text" id="invite-link" class="form-control" readonly>
+            <button class="btn btn-outline-secondary" type="button" id="copy-invite-btn">
+              <i class="lni lni-clipboard"></i>
+            </button>
+          </div>
+          <p class="text-sm text-muted">This link will expire in <span id="expiry-date"></span></p>
+        </div>
+      </div>
+      <!-- All Admins Table -->
+      <div class="card-style mb-30 mt-30">
+        <h6 class="mb-25">All Admins</h6>
+        <div class="table-wrapper table-responsive">
+          <table class="table table-style-1">
+            <thead>
+              <tr>
+                <th></th> <!-- Empty label for Logo column -->
+                <th>Admin Name</th>
+                <th>Last Login</th>
+              </tr>
+            </thead>
+            <tbody id="admin-table-body">
+              <!-- Admin data will be populated here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+          <!-- Modal for editing profile -->
+          <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editProfileModalLabel">Edit Profile</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="profile-form">
+                    <div class="row">
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Full Name</label>
+                          <input type="text" id="modal-name-input" placeholder="Enter your name" />
+                          <span id="modal-name-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Email</label>
+                          <input type="email" id="modal-email-input" placeholder="Enter your email" />
+                          <span id="modal-email-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Bio</label>
+                          <textarea id="modal-bio-input" placeholder="Write your bio here" rows="4"></textarea>
+                          <span id="modal-bio-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div class="input-style-1">
+                          <label>Address</label>
+                          <input type="text" id="modal-address-input" placeholder="Enter your address" />
+                          <span id="modal-address-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <div class="input-style-1">
+                          <label>City</label>
+                          <input type="text" id="modal-city-input" placeholder="Enter your city" />
+                          <span id="modal-city-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <div class="input-style-1">
+                          <label>Zip Code</label>
+                          <input type="text" id="modal-zip-code-input" placeholder="Enter your zip code" />
+                          <span id="modal-zip-code-error" class="text-danger text-sm" style="display: none;"></span>
+                        </div>
+                      </div>
+                      <div class="col-12 col-md-4">
+                        <div class="select-style-1">
+                          <label>Country</label>
+                          <div class="select-position">
+                            <select id="modal-country-input" class="light-bg">
+                              <option value="">Select country</option>
+                              <option value="USA">USA</option>
+                              <option value="UK">UK</option>
+                              <option value="Canada">Canada</option>
+                              <option value="India">India</option>
+                              <option value="Bangladesh">Bangladesh</option>
+                            </select>
+                            <span id="modal-country-error" class="text-danger text-sm" style="display: none;"></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="main-btn primary-btn btn-hover" id="save-profile-btn">Update Profile</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Modal for editing profile image -->
+<div class="modal fade" id="editProfileImageModal" tabindex="-1" aria-labelledby="editProfileImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileImageModalLabel">Update Profile Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="profile-image-form">
+          <div class="input-style-1">
+            <label>Profile Image</label>
+            <input type="file" id="modal-image-input" accept="image/*" />
+            <span id="modal-image-error" class="text-danger text-sm" style="display: none;"></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="save-profile-image-btn">Update Image</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal for editing profile image -->
+<div class="modal fade" id="editProfileImageModal" tabindex="-1" aria-labelledby="editProfileImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editProfileImageModalLabel">Update Profile Image</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="profile-image-form">
+          <div class="input-style-1">
+            <label>Profile Image</label>
+            <input type="file" id="modal-image-input" accept="image/*" />
+            <span id="modal-image-error" class="text-danger text-sm" style="display: none;"></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="save-profile-image-btn">Update Image</button>
+      </div>
+    </div>
+  </div>
+</div>
+      </section>
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Designed and Developed by
+                  <a href="https://plainadmin.com" rel="nofollow" target="_blank">
+                    PlainAdmin
+                  </a>
+                </p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="terms d-flex justify-content-center justify-content-md-end">
+                <a href="#0" class="text-sm">Term & Conditions</a>
+                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </main>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1491.0.min.js"></script>
+   <script type="module">
+   import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+// Initialize AWS S3 client for Contabo
+AWS.config.update({
+  accessKeyId: '3c3325e647fb54f813b27751aded8a35',
+  secretAccessKey: '5e8def27fa86d7ee4fa1faaaf4168b22',
+  endpoint: 'https://eu2.contabostorage.com',
+  s3ForcePathStyle: true,
+  region: 'eu2'
+});
+const s3 = new AWS.S3();
+const supabase = createClient(
+  'https://dash.erlli.com/api',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU2MTcwMTMzLCJleHAiOjIwNzE1MzAxMzN9.Sik1a3Sg-6nokPU0DNKurbrYzjSaPfPaOXtnj2qjRdk',
+  { auth: { autoRefreshToken: true, persistSession: true } }
+);
+// Function to display error messages
+function displayError(message) {
+  const errorDiv = document.createElement('div');
+  errorDiv.className = 'alert alert-danger mt-3';
+  errorDiv.textContent = message;
+  document.querySelector('.container-fluid').prepend(errorDiv);
+  setTimeout(() => errorDiv.remove(), 5000);
+}
+// Check authentication and fetch current admin data
+async function checkAuth() {
+  try {
+    const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+    if (sessionError || !session) {
+      window.location.href = 'signin.html';
+      return { isAuthenticated: false, adminData: null, userId: null };
+    }
+    const { data: adminData, error: adminError } = await supabase
+      .from('admins')
+      .select('id, name, logo, email, bio, address, city, zip_code, country, last_login')
+      .eq('id', session.user.id)
+      .single();
+    if (adminError) {
+      displayError(`Failed to fetch admin data: ${adminError.message}`);
+      await supabase.auth.signOut();
+      window.location.href = 'signin.html';
+      return { isAuthenticated: false, adminData: null, userId: null };
+    }
+    return { isAuthenticated: true, adminData, userId: session.user.id };
+  } catch (err) {
+    displayError(`Unexpected error: ${err.message}`);
+    window.location.href = 'signin.html';
+    return { isAuthenticated: false, adminData: null, userId: null };
+  }
+}
+// Fetch all admins for the table
+async function fetchAllAdmins() {
+  try {
+    const { data: admins, error } = await supabase
+      .from('admins')
+      .select('id, name, logo, last_login')
+      .order('last_login', { ascending: false, nullsFirst: false });
+    if (error) throw error;
+    return admins;
+  } catch (error) {
+    displayError(`Failed to fetch admins: ${error.message}`);
+    return [];
+  }
+}
+// Render all admins in the table
+function renderAdminTable(admins) {
+  const tableBody = document.getElementById('admin-table-body');
+  if (!tableBody) return;
+  tableBody.innerHTML = '';
+  if (admins.length === 0) {
+    const row = document.createElement('tr');
+    row.innerHTML = `<td colspan="3" class="text-center">No admins found</td>`;
+    tableBody.appendChild(row);
+    return;
+  }
+  admins.forEach(admin => {
+    const row = document.createElement('tr');
+    const logoUrl = admin.logo || 'assets/images/profile/profile-image.png';
+    const lastLogin = admin.last_login ? moment(admin.last_login).format('MMM DD, YYYY HH:mm') : 'Never';
+    row.innerHTML = `
+      <td>
+        <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+          <img src="${logoUrl}" alt="${admin.name || 'Admin'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+        </div>
+      </td>
+      <td>${admin.name || 'Admin'}</td>
+      <td>${lastLogin}</td>
+    `;
+    tableBody.appendChild(row);
+  });
+}
+// Fetch recent messages for the dropdown
+async function fetchRecentMessages(userId) {
+  try {
+    const { data: conversations, error: convError } = await supabase
+      .from('admin_conversations')
+      .select(`
+        id,
+        admin1_id,
+        admin2_id,
+        admin1:admins!admin_conversations_admin1_id_fkey (name, logo),
+        admin2:admins!admin_conversations_admin2_id_fkey (name, logo)
+      `)
+      .or(`admin1_id.eq.${userId},admin2_id.eq.${userId}`);
+    if (convError) throw convError;
+    const conversationIds = conversations.map(conv => conv.id);
+    if (conversationIds.length === 0) {
+      return [];
+    }
+    const { data: messages, error: msgError } = await supabase
+      .from('admin_messages')
+      .select(`
+        id,
+        content,
+        created_at,
+        conversation_id,
+        sender_id,
+        admins!sender_id (name, logo)
+      `)
+      .in('conversation_id', conversationIds)
+      .order('created_at', { ascending: false })
+      .limit(3);
+    if (msgError) throw msgError;
+    const messagesWithDetails = messages.map(msg => {
+      const conversation = conversations.find(conv => conv.id === msg.conversation_id);
+      const otherAdmin = conversation.admin1_id === userId ? conversation.admin2 : conversation.admin1;
+      const senderName = msg.admins?.name || 'Unknown';
+      const senderLogo = msg.admins?.logo || 'assets/images/profile/profile-image.png';
+      const timeAgo = moment(msg.created_at).fromNow();
+      return {
+        id: msg.id,
+        conversation_id: msg.conversation_id,
+        sender_name: senderName,
+        sender_logo: senderLogo,
+        content: msg.content,
+        time_ago: timeAgo
+      };
+    });
+    return messagesWithDetails;
+  } catch (error) {
+    console.error('Error fetching recent messages:', error);
+    return [];
+  }
+}
+// Render messages in the dropdown
+function renderMessagesDropdown(messages) {
+  const dropdown = document.getElementById('messagesDropdown');
+  const noMessagesPlaceholder = document.getElementById('noMessagesPlaceholder');
+  if (!dropdown) return;
+  dropdown.innerHTML = '';
+  if (messages.length === 0) {
+    noMessagesPlaceholder.style.display = 'block';
+    document.getElementById('unreadMessagesCount').textContent = '';
+    return;
+  }
+  noMessagesPlaceholder.style.display = 'none';
+  document.getElementById('unreadMessagesCount').textContent = messages.length > 0 ? messages.length : '';
+  messages.forEach(msg => {
+    const li = document.createElement('li');
+    li.innerHTML = `
+      <a href="messages.html">
+        <div class="image">
+          <img src="${msg.sender_logo}" alt="${msg.sender_name}" />
+        </div>
+        <div class="content">
+          <h6>${msg.sender_name}</h6>
+          <p>${msg.content.length > 50 ? msg.content.substring(0, 50) + '...' : msg.content}</p>
+          <span>${msg.time_ago}</span>
+        </div>
+      </a>
+    `;
+    dropdown.appendChild(li);
+  });
+}
+// Validate email format
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+// Upload profile image to Contabo
+async function uploadImage(file) {
+  if (!file) return null;
+  const fileName = `profile_${Date.now()}.jpg`;
+  const maxSize = 5 * 1024 * 1024; // 5MB limit
+  try {
+    if (file.size > maxSize) throw new Error('Image size exceeds 5MB limit');
+    if (!['image/jpeg', 'image/png'].includes(file.type)) throw new Error('Only JPEG and PNG images are supported');
+    const arrayBuffer = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('Failed to read file'));
+      reader.readAsArrayBuffer(file);
+    });
+    const params = {
+      Bucket: 'erllicom',
+      Key: `public/${fileName}`,
+      Body: arrayBuffer,
+      ContentType: file.type,
+      ACL: 'public-read'
+    };
+    await new Promise((resolve, reject) => {
+      s3.upload(params, (err, data) => {
+        if (err) reject(new Error(`Failed to upload to Contabo: ${err.message}`));
+        else resolve(data);
+      });
+    });
+    return `https://eu2.contabostorage.com/64f7bfe94c084c59a58b3cd25e4508eb:erllicom/public/${fileName}`;
+  } catch (error) {
+    displayError(`Failed to upload image: ${error.message}`);
+    return null;
+  }
+}
+// Update profile data
+async function updateProfile(userId, newData) {
+  try {
+    const updates = {
+      name: newData.name,
+      email: newData.email,
+      bio: newData.bio || null,
+      address: newData.address || null,
+      city: newData.city || null,
+      zip_code: newData.zip_code || null,
+      country: newData.country || null
+    };
+    if (newData.logo !== undefined) updates.logo = newData.logo;
+    const { error: adminError } = await supabase
+      .from('admins')
+      .update(updates)
+      .eq('id', userId);
+    if (adminError) throw adminError;
+    const { error: authError } = await supabase.auth.updateUser({ email: newData.email });
+    if (authError) throw authError;
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+}
+// Generate random token
+function generateToken() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let token = '';
+  for (let i = 0; i < 32; i++) {
+    token += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return token;
+}
+// Generate invitation link
+async function generateInvite(userId) {
+  const email = document.getElementById('invite-email').value.trim();
+  const expiryDays = parseInt(document.getElementById('invite-expiry').value);
+  const customMessage = document.getElementById('invite-message').value.trim();
+  if (email && !isValidEmail(email)) {
+    displayError('Please enter a valid email address');
+    return;
+  }
+  try {
+    const token = generateToken();
+    const expiresAt = expiryDays === 0 ? null : new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+    const { error } = await supabase
+      .from('invitations')
+      .insert({
+        token,
+        email: email || null,
+        created_by: userId,
+        custom_message: customMessage || null,
+        expires_at: expiresAt
+      });
+    if (error) throw error;
+    const inviteLink = `https://dash.erlli.com/inviteadmin.html?token=${token}`;
+    const expiryDate = expiryDays === 0 ? 'Never' : new Date(expiresAt).toLocaleDateString();
+    document.getElementById('invite-link').value = inviteLink;
+    document.getElementById('expiry-date').textContent = expiryDate;
+    document.getElementById('invite-result').style.display = 'block';
+    // Refresh admin table after generating an invitation
+    const admins = await fetchAllAdmins();
+    renderAdminTable(admins);
+  } catch (error) {
+    displayError(`Failed to generate invitation: ${error.message}`);
+  }
+}
+// Initialize and update profile data
+(async () => {
+  const { isAuthenticated, adminData, userId } = await checkAuth();
+  if (!isAuthenticated) return;
+  // Update header and profile section
+  if (adminData) {
+    const profileImage = document.getElementById('profile-image');
+    const dropdownProfileImage = document.getElementById('dropdown-profile-image');
+    const profileImageSection = document.getElementById('profile-image-section');
+    const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+    document.getElementById('profile-name').textContent = adminData.name || 'Admin';
+    document.getElementById('dropdown-profile-name').textContent = adminData.name || 'Admin';
+    document.getElementById('dropdown-profile-email').textContent = adminData.email || 'Email not set';
+    if (adminData.logo) {
+      profileImage.src = adminData.logo;
+      dropdownProfileImage.src = adminData.logo;
+      profileImageSection.src = adminData.logo;
+      profileImagePlaceholder.style.backgroundImage = `url(${adminData.logo})`;
+      profileImagePlaceholder.classList.add('has-image');
+      profileImageSection.style.display = 'block';
+    }
+    document.getElementById('profile-name-section').textContent = adminData.name || 'Admin';
+    document.getElementById('profile-email-section').value = adminData.email || 'Email not set';
+    document.getElementById('profile-bio-section').value = adminData.bio || 'Not set';
+    document.getElementById('profile-address-section').value = adminData.address || 'Not set';
+    document.getElementById('profile-city-section').value = adminData.city || 'Not set';
+    document.getElementById('profile-zip-code-section').value = adminData.zip_code || 'Not set';
+    document.getElementById('profile-country-section').value = adminData.country || 'Not set';
+    document.getElementById('modal-name-input').value = adminData.name || '';
+    document.getElementById('modal-email-input').value = adminData.email || '';
+    document.getElementById('modal-bio-input').value = adminData.bio || '';
+    document.getElementById('modal-address-input').value = adminData.address || '';
+    document.getElementById('modal-city-input').value = adminData.city || '';
+    document.getElementById('modal-zip-code-input').value = adminData.zip_code || '';
+    document.getElementById('modal-country-input').value = adminData.country || '';
+  }
+  // Fetch and render all admins
+  const admins = await fetchAllAdmins();
+  renderAdminTable(admins);
+  // Populate messages dropdown
+  const messages = await fetchRecentMessages(userId);
+  renderMessagesDropdown(messages);
+  // Handle profile image upload
+  const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+  const profileImageInput = document.getElementById('profileImageInput');
+  if (profileImagePlaceholder && profileImageInput) {
+    profileImagePlaceholder.addEventListener('click', () => profileImageInput.click());
+    profileImageInput.addEventListener('change', async () => {
+      const file = profileImageInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          profileImagePlaceholder.style.backgroundImage = `url(${e.target.result})`;
+          profileImagePlaceholder.classList.add('has-image');
+          document.getElementById('profile-image-section').src = e.target.result;
+          document.getElementById('profile-image-section').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+        const imageUrl = await uploadImage(file);
+        if (imageUrl) {
+          const { success, error } = await updateProfile(userId, { logo: imageUrl });
+          if (success) {
+            document.getElementById('profile-image').src = imageUrl;
+            document.getElementById('dropdown-profile-image').src = imageUrl;
+            document.getElementById('profile-image-section').src = imageUrl;
+            profileImagePlaceholder.style.backgroundImage = `url(${imageUrl})`;
+            alert('Profile image updated successfully!');
+            // Refresh admin table
+            const admins = await fetchAllAdmins();
+            renderAdminTable(admins);
+          } else {
+            displayError(`Image update failed: ${error}`);
+          }
+        }
+      }
+    });
+  }
+  // Handle profile save
+  document.getElementById('save-profile-btn').addEventListener('click', async () => {
+    const newData = {
+      name: document.getElementById('modal-name-input').value.trim(),
+      email: document.getElementById('modal-email-input').value.trim(),
+      bio: document.getElementById('modal-bio-input').value.trim(),
+      address: document.getElementById('modal-address-input').value.trim(),
+      city: document.getElementById('modal-city-input').value.trim(),
+      zip_code: document.getElementById('modal-zip-code-input').value.trim(),
+      country: document.getElementById('modal-country-input').value
+    };
+    const nameError = document.getElementById('modal-name-error');
+    const emailError = document.getElementById('modal-email-error');
+    const errors = [nameError, emailError, document.getElementById('modal-bio-error'), document.getElementById('modal-address-error'),
+                    document.getElementById('modal-city-error'), document.getElementById('modal-zip-code-error'), document.getElementById('modal-country-error')];
+    errors.forEach(error => { error.style.display = 'none'; error.textContent = ''; });
+    let hasError = false;
+    if (!newData.name) {
+      nameError.textContent = 'Name is required';
+      nameError.style.display = 'block';
+      hasError = true;
+    }
+    if (!isValidEmail(newData.email)) {
+      emailError.textContent = 'Please enter a valid email';
+      emailError.style.display = 'block';
+      hasError = true;
+    }
+    if (hasError) return;
+    const { success, error } = await updateProfile(userId, newData);
+    if (success) {
+      document.getElementById('profile-name-section').textContent = newData.name || 'Admin';
+      document.getElementById('profile-email-section').value = newData.email || 'Email not set';
+      document.getElementById('profile-bio-section').value = newData.bio || 'Not set';
+      document.getElementById('profile-address-section').value = newData.address || 'Not set';
+      document.getElementById('profile-city-section').value = newData.city || 'Not set';
+      document.getElementById('profile-zip-code-section').value = newData.zip_code || 'Not set';
+      document.getElementById('profile-country-section').value = newData.country || 'Not set';
+      document.getElementById('profile-name').textContent = newData.name || 'Admin';
+      document.getElementById('dropdown-profile-name').textContent = newData.name || 'Admin';
+      document.getElementById('dropdown-profile-email').textContent = newData.email || 'Email not set';
+      bootstrap.Modal.getInstance(document.getElementById('editProfileModal')).hide();
+      alert('Profile updated successfully!');
+      // Refresh admin table
+      const admins = await fetchAllAdmins();
+      renderAdminTable(admins);
+    } else {
+      emailError.textContent = error.includes('email') ? 'Email update failed: ' + error : 'Update failed: ' + error;
+      emailError.style.display = 'block';
+    }
+  });
+  // Handle invitation generation
+  document.getElementById('generate-invite-btn').addEventListener('click', () => generateInvite(userId));
+  // Handle copy invite link
+  document.getElementById('copy-invite-btn').addEventListener('click', () => {
+    const inviteLink = document.getElementById('invite-link');
+    inviteLink.select();
+    document.execCommand('copy');
+    alert('Invite link copied to clipboard!');
+  });
+  // Handle logout
+  document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      window.location.href = 'signin.html';
+    } catch (error) {
+      displayError(`Logout failed: ${error.message}`);
+    }
+  });
+})();
+  </script>
+  </body>
+</html>

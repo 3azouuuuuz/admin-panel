@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+    <title>Accept Admin Invitation | PlainAdmin Demo</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" />
+    <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+      .container {
+        max-width: 500px;
+        margin-top: 50px;
+      }
+      .card-style {
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      }
+      .input-style-1 {
+        margin-bottom: 20px;
+      }
+      .input-style-1 label {
+        font-weight: 500;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .input-style-1 input, .input-style-1 textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+      }
+      .main-btn {
+        width: 100%;
+        padding: 10px;
+      }
+      .alert {
+        margin-bottom: 20px;
+      }
+      .alert-success {
+        background-color: #f0f9f0;
+        border-color: #d1e7dd;
+        color: #0f5132;
+      }
+      .alert-danger {
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        color: #721c24;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card-style">
+        <div class="title mb-30">
+          <h2>Accept Admin Invitation</h2>
+        </div>
+        <div id="custom-message" class="alert alert-success" style="display: none;"></div>
+        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+        <form id="invite-form">
+          <div class="input-style-1">
+            <label>Email</label>
+            <input type="email" id="email-input" placeholder="Enter your email" />
+            <span id="email-error" class="text-danger text-sm" style="display: none;"></span>
+          </div>
+          <div class="input-style-1">
+            <label>Full Name</label>
+            <input type="text" id="name-input" placeholder="Enter your full name" />
+            <span id="name-error" class="text-danger text-sm" style="display: none;"></span>
+          </div>
+          <div class="input-style-1">
+            <label>Password</label>
+            <input type="password" id="password-input" placeholder="Enter your password" />
+            <span id="password-error" class="text-danger text-sm" style="display: none;"></span>
+          </div>
+          <button type="button" class="main-btn primary-btn btn-hover" id="accept-invite-btn">Accept Invitation</button>
+        </form>
+      </div>
+    </div>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script type="module">
+      import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+      const supabase = createClient(
+        'https://dash.erlli.com/api',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU2MTcwMTMzLCJleHAiOjIwNzE1MzAxMzN9.Sik1a3Sg-6nokPU0DNKurbrYzjSaPfPaOXtnj2qjRdk',
+        { auth: { autoRefreshToken: true, persistSession: true } }
+      );
+
+      function displayError(message) {
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        setTimeout(() => errorDiv.style.display = 'none', 5000);
+      }
+
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      async function acceptInvite() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (!token) {
+          displayError('Invalid or missing invitation token');
+          return;
+        }
+
+        const email = document.getElementById('email-input').value.trim();
+        const name = document.getElementById('name-input').value.trim();
+        const password = document.getElementById('password-input').value.trim();
+
+        const emailError = document.getElementById('email-error');
+        const nameError = document.getElementById('name-error');
+        const passwordError = document.getElementById('password-error');
+        [emailError, nameError, passwordError].forEach(error => {
+          error.style.display = 'none';
+          error.textContent = '';
+        });
+
+        let hasError = false;
+        if (!isValidEmail(email)) {
+          emailError.textContent = 'Please enter a valid email';
+          emailError.style.display = 'block';
+          hasError = true;
+        }
+        if (!name) {
+          nameError.textContent = 'Name is required';
+          nameError.style.display = 'block';
+          hasError = true;
+        }
+        if (!password || password.length < 6) {
+          passwordError.textContent = 'Password must be at least 6 characters';
+          passwordError.style.display = 'block';
+          hasError = true;
+        }
+        if (hasError) return;
+
+        try {
+          // Validate token
+          const { data: invitation, error: inviteError } = await supabase
+            .from('invitations')
+            .select('email, custom_message, used, expires_at')
+            .eq('token', token)
+            .single();
+
+          if (inviteError || !invitation) {
+            displayError('Invalid or expired invitation');
+            return;
+          }
+
+          if (invitation.used) {
+            displayError('This invitation has already been used');
+            return;
+          }
+
+          if (invitation.expires_at && new Date(invitation.expires_at) < new Date()) {
+            displayError('This invitation has expired');
+            return;
+          }
+
+          if (invitation.email && invitation.email !== email) {
+            displayError('Email does not match the invitation');
+            return;
+          }
+
+          // Create Supabase Auth user
+          const { data: { user }, error: signUpError } = await supabase.auth.signUp({
+            email,
+            password,
+            options: { data: { name } }
+          });
+          if (signUpError) throw signUpError;
+
+          if (!user) {
+            displayError('Failed to create user');
+            return;
+          }
+
+          // Insert into admins table
+          const { error: adminError } = await supabase
+            .from('admins')
+            .insert({
+              id: user.id,
+              email,
+              name,
+              created_at: new Date().toISOString()
+            });
+
+          if (adminError) throw adminError;
+
+          // Mark invitation as used
+          const { error: updateError } = await supabase
+            .from('invitations')
+            .update({ used: true })
+            .eq('token', token);
+
+          if (updateError) throw updateError;
+
+          // Display custom message
+          if (invitation.custom_message) {
+            document.getElementById('custom-message').textContent = invitation.custom_message;
+            document.getElementById('custom-message').style.display = 'block';
+          }
+
+          alert('Account created successfully! Redirecting to sign-in page...');
+          setTimeout(() => window.location.href = 'signin.html', 2000);
+        } catch (error) {
+          displayError(`Failed to accept invitation: ${error.message}`);
+        }
+      }
+
+      // Initialize page
+      (async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (!token) {
+          displayError('Invalid invitation link');
+          return;
+        }
+
+        try {
+          const { data: invitation, error } = await supabase
+            .from('invitations')
+            .select('email, custom_message')
+            .eq('token', token)
+            .single();
+
+          if (error || !invitation) {
+            displayError('Invalid or expired invitation');
+            return;
+          }
+
+          if (invitation.email) {
+            document.getElementById('email-input').value = invitation.email;
+            document.getElementById('email-input').setAttribute('readonly', 'readonly');
+          }
+          if (invitation.custom_message) {
+            document.getElementById('custom-message').textContent = invitation.custom_message;
+            document.getElementById('custom-message').style.display = 'block';
+          }
+        } catch (error) {
+          displayError(`Failed to validate invitation: ${error.message}`);
+        }
+
+        document.getElementById('accept-invite-btn').addEventListener('click', acceptInvite);
+      })();
+    </script>
+  </body>
+</html>

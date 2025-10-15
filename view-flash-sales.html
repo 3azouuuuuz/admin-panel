@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
+  <title>Flash Sales | PlainAdmin Demo</title>
+
+  <!-- ========== All CSS files linkup ========= -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="assets/css/lineicons.css" />
+  <link rel="stylesheet" href="assets/css/materialdesignicons.min.css" />
+  <link rel="stylesheet" href="assets/css/fullcalendar.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <style>
+ .card-image {
+  position: relative;
+}
+.button-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 10;
+}
+.action-button {
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+.action-button i {
+  font-size: 16px;
+  color: #4A6CF7;
+}
+.action-button:hover {
+  background-color: #f0f0f0;
+}
+.card-style-2 {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-style-2.red {
+  background-color: #dc3545;
+}
+.card-style-2.green {
+  background-color: #28a745;
+}
+.card-style-2.blue {
+  background-color: #007bff;
+}
+.card-style-2.brown {
+  background-color: #8b4513;
+}
+.card-style-2.orange {
+  background-color: #fd7e14;
+}
+.card-style-2 .card-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  background-color: #fff;
+}
+.card-style-2 .card-content {
+  padding: 15px;
+  color: #fff;
+}
+.card-style-2 .card-content h4 a,
+.card-style-2 .card-content p {
+  color: #fff;
+}
+.card-style-2 .card-content h4 a:hover {
+  color: #f0f0f0;
+}
+.image-container,
+.url-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+.placeholder-img {
+  width: 100%;
+  height: 200px;
+  border-radius: 8px;
+  text-align: center;
+  line-height: 200px;
+  background: #f0f0f0;
+  color: #6c757d;
+  font-size: 16px;
+  cursor: pointer;
+}
+.placeholder-img:hover {
+  background: #e0e0e0;
+}
+.hidden-file-input {
+  display: none;
+}
+#addToggleInputMethod,
+#editToggleInputMethod {
+  font-size: 14px;
+  text-decoration: underline;
+}
+#addToggleInputMethod:hover,
+#editToggleInputMethod:hover {
+  color: #0056b3;
+}
+</style>
+</head>
+  <body>
+    <!-- ======== Preloader =========== -->
+    <div id="preloader">
+      <div class="spinner"></div>
+    </div>
+    <!-- ======== Preloader =========== -->
+
+    <!-- ======== sidebar-nav start =========== -->
+    <aside class="sidebar-nav-wrapper">
+  <div class="navbar-logo">
+    <a href="index.html">
+      <img src="assets/images/logo/logo.svg" alt="logo" />
+    </a>
+  </div>
+  <nav class="sidebar-nav">
+    <ul>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_1"
+          aria-controls="ddmenu_1"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M8.74999 18.3333C12.2376 18.3333 15.1364 15.8128 15.7244 12.4941C15.8448 11.8143 15.2737 11.25 14.5833 11.25H9.99999C9.30966 11.25 8.74999 10.6903 8.74999 10V5.41666C8.74999 4.7263 8.18563 4.15512 7.50586 4.27556C4.18711 4.86357 1.66666 7.76243 1.66666 11.25C1.66666 15.162 4.83797 18.3333 8.74999 18.3333Z" />
+              <path
+                d="M17.0833 10C17.7737 10 18.3432 9.43708 18.2408 8.75433C17.7005 5.14918 14.8508 2.29947 11.2457 1.75912C10.5629 1.6568 10 2.2263 10 2.91665V9.16666C10 9.62691 10.3731 10 10.8333 10H17.0833Z" />
+            </svg>
+          </span>
+          <span class="text">Dashboard</span>
+        </a>
+        <ul id="ddmenu_1" class="collapse show dropdown-nav">
+          <li>
+            <a href="index.html" class="active"> Erlli </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_products"
+          aria-controls="ddmenu_products"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.66666 4.16667C1.66666 3.24619 2.41285 2.5 3.33332 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V9.16667C18.3333 10.0872 17.5872 10.8333 16.6667 10.8333H3.33332C2.41285 10.8333 1.66666 10.0872 1.66666 9.16667V4.16667Z" />
+              <path
+                d="M1.875 13.75C1.875 13.4048 2.15483 13.125 2.5 13.125H17.5C17.8452 13.125 18.125 13.4048 18.125 13.75C18.125 14.0952 17.8452 14.375 17.5 14.375H2.5C2.15483 14.375 1.875 14.0952 1.875 13.75Z" />
+              <path
+                d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
+            </svg>
+          </span>
+          <span class="text">Products</span>
+        </a>
+        <ul id="ddmenu_products" class="collapse dropdown-nav">
+          <li>
+            <a href="view-products.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_users"
+          aria-controls="ddmenu_users"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10ZM10 12.5C6.13401 12.5 0 14.2614 0 17.5V20H20V17.5C20 14.2614 13.866 12.5 10 12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Users</span>
+        </a>
+        <ul id="ddmenu_users" class="collapse dropdown-nav">
+          <li>
+            <a href="view-users.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_orders"
+          aria-controls="ddmenu_orders"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M3.33334 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V15.8333C18.3333 16.7538 17.5872 17.5 16.6667 17.5H3.33334C2.41286 17.5 1.66667 16.7538 1.66667 15.8333V4.16667C1.66667 3.24619 2.41286 2.5 3.33334 2.5ZM6.66667 5.83333C6.32149 5.83333 6.04167 6.11316 6.04167 6.45833C6.04167 6.80351 6.32149 7.08333 6.66667 7.08333H13.3333C13.6785 7.08333 13.9583 6.80351 13.9583 6.45833C13.9583 6.11316 13.6785 5.83333 13.3333 5.83333H6.66667ZM6.66667 9.16667C6.32149 9.16667 6.04167 9.44649 6.04167 9.79167C6.04167 10.1368 6.32149 10.4167 6.66667 10.4167H10C10.3452 10.4167 10.625 10.1368 10.625 9.79167C10.625 9.44649 10.3452 9.16667 10 9.16667H6.66667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Orders</span>
+        </a>
+        <ul id="ddmenu_orders" class="collapse dropdown-nav">
+          <li>
+            <a href="view-orders.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_flash_sales"
+          aria-controls="ddmenu_flash_sales"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10 2.5C10 1.57953 10.7462 0.833336 11.6667 0.833336H15.8333C16.7538 0.833336 17.5 1.57953 17.5 2.5V6.66667C17.5 7.58714 16.7538 8.33334 15.8333 8.33334H11.6667C10.7462 8.33334 10 7.58714 10 6.66667V2.5ZM2.5 11.6667C2.5 10.7462 3.24619 10 4.16667 10H8.33333C9.25381 10 10 10.7462 10 11.6667V15.8333C10 16.7538 9.25381 17.5 8.33333 17.5H4.16667C3.24619 17.5 2.5 16.7538 2.5 15.8333V11.6667Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Flash Sales</span>
+        </a>
+        <ul id="ddmenu_flash_sales" class="collapse dropdown-nav">
+          <li>
+            <a href="view-flash-sales.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_categories"
+          aria-controls="ddmenu_categories"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M2.5 3.33334C2.5 2.41286 3.24619 1.66667 4.16667 1.66667H7.5C8.42048 1.66667 9.16667 2.41286 9.16667 3.33334V7.5C9.16667 8.42048 8.42048 9.16667 7.5 9.16667H4.16667C3.24619 9.16667 2.5 8.42048 2.5 7.5V3.33334ZM10.8333 3.33334C10.8333 2.41286 11.5795 1.66667 12.5 1.66667H15.8333C16.7538 1.66667 17.5 2.41286 17.5 3.33334V7.5C17.5 8.42048 16.7538 9.16667 15.8333 9.16667H12.5C11.5795 9.16667 10.8333 8.42048 10.8333 7.5V3.33334ZM4.16667 10.8333C3.24619 10.8333 2.5 11.5795 2.5 12.5V15.8333C2.5 16.7538 3.24619 17.5 4.16667 17.5H7.5C8.42048 17.5 9.16667 16.7538 9.16667 15.8333V12.5C9.16667 11.5795 8.42048 10.8333 7.5 10.8333H4.16667ZM12.5 10.8333C11.5795 10.8333 10.8333 11.5795 10.8333 12.5V15.8333C10.8333 16.7538 11.5795 17.5 12.5 17.5H15.8333C16.7538 17.5 17.5 16.7538 17.5 15.8333V12.5C17.5 11.5795 16.7538 10.8333 15.8333 10.8333H12.5Z"
+              />
+            </svg>
+          </span>
+          <span class="text">Categories</span>
+        </a>
+        <ul id="ddmenu_categories" class="collapse dropdown-nav">
+          <li>
+            <a href="view-categories.html"> View </a>
+          </li>
+          <li>
+            <a href="view-categories.html"> Add </a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item nav-item-has-children">
+        <a
+          href="#0"
+          class="collapsed"
+          data-bs-toggle="collapse"
+          data-bs-target="#ddmenu_notifications"
+          aria-controls="ddmenu_notifications"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 2C7.79086 2 6 3.79086 6 6V10C6 12.2091 7.79086 14 10 14C12.2091 14 14 12.2091 14 10V6C14 3.79086 12.2091 2 10 2ZM10 16C8.89543 16 8 16.8954 8 18C8 19.1046 8.89543 20 10 20C11.1046 20 12 19.1046 12 18C12 16.8954 11.1046 16 10 16Z" />
+            </svg>
+          </span>
+          <span class="text">Notifications</span>
+        </a>
+        <ul id="ddmenu_notifications" class="collapse dropdown-nav">
+          <li>
+            <a href="view-notifications.html"> View </a>
+          </li>
+        </ul>
+      </li>
+      <span class="divider"><hr /></span>
+      <li class="nav-item">
+        <a href="#" id="logoutBtn">
+          <span class="icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M13.3333 14.1667L16.6667 10.8333M16.6667 10.8333L13.3333 7.5M16.6667 10.8333H6.66667M10 14.1667C10 15.5475 8.88071 16.6667 7.5 16.6667C6.11929 16.6667 5 15.5475 5 14.1667V5.83333C5 4.45262 6.11929 3.33333 7.5 3.33333C8.88071 3.33333 10 4.45262 10 5.83333" stroke="#4A6CF7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="text">Logout</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+    <div class="overlay"></div>
+    <!-- ======== sidebar-nav end =========== -->
+
+    <!-- ======== main-wrapper start =========== -->
+    <main class="main-wrapper">
+      <!-- ========== header start ========== -->
+      <header class="header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-5 col-md-5 col-6">
+          <div class="header-left d-flex align-items-center">
+            <div class="menu-toggle-btn mr-15">
+              <button id="menu-toggle" class="main-btn primary-btn btn-hover">
+                <i class="lni lni-chevron-left me-2"></i> Menu
+              </button>
+            </div>
+            <div class="header-search d-none d-md-flex">
+              <form action="#">
+                <input type="text" placeholder="Search..." />
+                <button><i class="lni lni-search-alt"></i></button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7 col-md-7 col-6">
+          <div class="header-right">
+            <div class="header-message-box ml-15 d-none d-md-flex">
+              <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.74866 5.97421C7.91444 5.96367 8.08162 5.95833 8.25005 5.95833C12.5532 5.95833 16.0417 9.4468 16.0417 13.75C16.0417 13.9184 16.0364 14.0856 16.0259 14.2514C16.3246 14.138 16.6127 14.003 16.8883 13.8482L19.2306 14.629C19.7858 14.8141 20.3141 14.2858 20.129 13.7306L19.3482 11.3882C19.8694 10.4604 20.1667 9.38996 20.1667 8.25C20.1667 4.70617 17.2939 1.83333 13.75 1.83333C11.0077 1.83333 8.66702 3.55376 7.74866 5.97421Z" fill="" />
+                  <path d="M14.6667 13.75C14.6667 17.2938 11.7939 20.1667 8.25004 20.1667C7.11011 20.1667 6.03962 19.8694 5.11182 19.3482L2.76946 20.129C2.21421 20.3141 1.68597 19.7858 1.87105 19.2306L2.65184 16.8882C2.13062 15.9604 1.83338 14.89 1.83338 13.75C1.83338 10.2062 4.70622 7.33333 8.25004 7.33333C11.7939 7.33333 14.6667 10.2062 14.6667 13.75ZM5.95838 13.75C5.95838 13.2437 5.54797 12.8333 5.04171 12.8333C4.53545 12.8333 4.12504 13.2437 4.12504 13.75C4.12504 14.2563 4.53545 14.6667 5.04171 14.6667C5.54797 14.6667 5.95838 14.2563 5.95838 13.75ZM9.16671 13.75C9.16671 13.2437 8.7563 12.8333 8.25004 12.8333C7.74379 12.8333 7.33338 13.2437 7.33338 13.75C7.33338 14.2563 7.74379 14.6667 8.25004 14.6667C8.7563 14.6667 9.16671 14.2563 9.16671 13.75ZM11.4584 14.6667C11.9647 14.6667 12.375 14.2563 12.375 13.75C12.375 13.2437 11.9647 12.8333 11.4584 12.8333C10.9521 12.8333 10.5417 13.2437 10.5417 13.75C10.5417 14.2563 10.9521 14.6667 11.4584 14.6667Z" fill="" />
+                </svg>
+                <h5 id="unreadMessagesCount"></h5>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="message" id="messagesDropdown">
+                <li id="noMessagesPlaceholder">
+                  <div class="content text-center">
+                    <p>No messages available</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="profile-box ml-15">
+              <button class="dropdown-toggle bg-transparent border-0" type="button" id="profile" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="profile-info">
+                  <div class="info">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div>
+                      <h6 class="fw-500" id="profile-name">Admin</h6>
+                      <p>Admin</p>
+                    </div>
+                  </div>
+                </div>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
+                <li>
+                  <div class="author-info flex items-center !p-1">
+                    <div class="image" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden;">
+                      <img src="assets/images/profile/profile-image.png" alt="Admin Logo" id="dropdown-profile-image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+                    </div>
+                    <div class="content">
+                      <h4 class="text-sm" id="dropdown-profile-name">Admin</h4>
+                      <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" id="dropdown-profile-email" href="#">Email not set</a>
+                    </div>
+                  </div>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="view-profile.html">
+                    <i class="lni lni-user"></i> View Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="messages.html"> <i class="lni lni-inbox"></i> Messages </a>
+                </li>
+                <li>
+                  <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+                </li>
+                <li class="divider"></li>
+                <li>
+                  <a href="#0" id="logoutBtn"> <i class="lni lni-exit"></i> Sign Out </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+      <!-- ========== header end ========== -->
+
+      <!-- ========== card components start ========== -->
+      <section class="card-components">
+        <div class="container-fluid">
+          <!-- ========== title-wrapper start ========== -->
+<div class="title-wrapper pt-30">
+  <div class="row align-items-center">
+    <div class="col-12 d-flex align-items-center justify-content-between gap-3">
+      <div class="title">
+        <h2>Flash Sales</h2>
+      </div>
+      <a href="#0" class="main-btn primary-btn rounded-full btn-hover d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;" data-bs-toggle="modal" data-bs-target="#addFlashSaleModal">
+        <i class="lni lni-plus" style="font-size: 20px; color: #fff;"></i>
+      </a>
+      <div class="breadcrumb-wrapper">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="index.html">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Flash Sales
+            </li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+<!-- Add Flash Sale Modal -->
+<!-- Add Flash Sale Modal -->
+<div class="modal fade" id="addFlashSaleModal" tabindex="-1" aria-labelledby="addFlashSaleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addFlashSaleModalLabel">Add New Flash Sale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-style mb-30 position-relative">
+          <a href="#" id="addToggleInputMethod" class="position-absolute top-0 end-0 mt-2 me-3 text-primary">or input an image URL</a>
+          <div class="image-container" id="addImageContainer">
+            <div class="image-placeholder mb-10">
+              <div class="placeholder-img d-flex align-items-center justify-content-center" id="addImagePlaceholder-0">
+                Add Banners (Multiple Images)
+              </div>
+              <input type="file" name="banner-0" id="addImageInput-0" class="hidden-file-input" accept="image/*" />
+            </div>
+          </div>
+          <div class="url-container" id="addUrlContainer" style="display: none;">
+            <div class="input-style-1 mb-10">
+              <input type="url" name="url-0" id="addUrlInput-0" placeholder="Enter image URL" class="form-control" />
+            </div>
+          </div>
+          <button type="button" class="main-btn secondary-btn btn-hover mb-20" id="addNewImageBtnAddModal">Add New Image</button>
+          <form id="addFlashSaleForm" action="#">
+            <div class="input-style-1">
+              <label>Campaign Name</label>
+              <input type="text" name="campaign_name" placeholder="Enter campaign name" required />
+            </div>
+            <div class="input-style-1">
+              <label>Start Time</label>
+              <input type="datetime-local" name="start_time" required />
+            </div>
+            <div class="input-style-1">
+              <label>End Time</label>
+              <input type="datetime-local" name="end_time" required />
+            </div>
+            <div class="input-style-1">
+              <label>Theme</label>
+              <select name="theme" required>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="brown">Brown</option>
+                <option value="orange">Orange</option>
+                <option value="red">Red</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="saveFlashSaleBtn">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Edit Flash Sale Modal -->
+<div class="modal fade" id="editFlashSaleModal" tabindex="-1" aria-labelledby="editFlashSaleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editFlashSaleModalLabel">Edit Flash Sale</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card-style mb-30 position-relative">
+          <a href="#" id="editToggleInputMethod" class="position-absolute top-0 end-0 mt-2 me-3 text-primary">or input an image URL</a>
+          <div class="image-container" id="editImageContainer">
+            <!-- Image placeholders will be dynamically added here -->
+          </div>
+          <div class="url-container" id="editUrlContainer" style="display: none;">
+            <!-- URL inputs will be dynamically added here -->
+          </div>
+          <button type="button" class="main-btn secondary-btn btn-hover mb-20" id="addNewImageBtn">Add New Image</button>
+          <form id="editFlashSaleForm" action="#">
+            <input type="hidden" name="id" id="editFlashSaleId" />
+            <input type="hidden" name="banner_id" id="editBannerId" />
+            <div class="input-style-1">
+              <label>Campaign Name</label>
+              <input type="text" name="campaign_name" placeholder="Enter campaign name" required />
+            </div>
+            <div class="input-style-1">
+              <label>End Time</label>
+              <input type="datetime-local" name="end_time" required />
+            </div>
+            <div class="input-style-1">
+              <label>Theme</label>
+              <select name="theme" required>
+                <option value="green">Green</option>
+                <option value="blue">Blue</option>
+                <option value="brown">Brown</option>
+                <option value="orange">Orange</option>
+                <option value="red">Red</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="main-btn secondary-btn btn-hover" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="main-btn primary-btn btn-hover" id="updateFlashSaleBtn">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+          <!-- ========== title-wrapper end ========== -->
+
+          <!-- ========== cards-styles start ========== -->
+         <div class="cards-styles">
+  <div class="row" id="flashSalesContainer">
+    <div class="col-12">
+      <!-- Flash sales will be populated here -->
+    </div>
+    <div id="errorMessage" class="alert alert-danger mt-3" style="display: none;"></div>
+    <div id="emptyMessage" class="alert alert-info mt-3" style="display: none;">
+      No flash sales found.
+    </div>
+  </div>
+</div>
+        <!-- end container -->
+      </section>
+      <!-- ========== card components end ========== -->
+
+      <!-- ========== footer start =========== -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-6 order-last order-md-first">
+              <div class="copyright text-center text-md-start">
+                <p class="text-sm">
+                  Designed and Developed by
+                  <a href="https://plainadmin.com" rel="nofollow" target="_blank">
+                    PlainAdmin
+                  </a>
+                </p>
+              </div>
+            </div>
+            <!-- end col-->
+            <div class="col-md-6">
+              <div class="terms d-flex justify-content-center justify-content-md-end">
+                <a href="#0" class="text-sm">Term & Conditions</a>
+                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
+              </div>
+            </div>
+          </div>
+          <!-- end row -->
+        </div>
+        <!-- end container -->
+      </footer>
+      <!-- ========== footer end =========== -->
+    </main>
+    <!-- ======== main-wrapper end =========== -->
+
+    <!-- ========= All Javascript files linkup ======== -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/Chart.min.js"></script>
+    <script src="assets/js/dynamic-pie-chart.js"></script>
+    <script src="assets/js/moment.min.js"></script>
+    <script src="assets/js/fullcalendar.js"></script>
+    <script src="assets/js/jvectormap.min.js"></script>
+    <script src="assets/js/world-merc.js"></script>
+    <script src="assets/js/polyfill.js"></script>
+    <script src="assets/js/main.js"></script>
+      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1491.0.min.js"></script>
+
+<script type="module">
+    (async () => {
+      function displayError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        if (errorMessage) {
+          errorMessage.textContent = message;
+          errorMessage.style.display = 'block';
+        }
+        const emptyMessage = document.getElementById('emptyMessage');
+        if (emptyMessage) emptyMessage.style.display = 'none';
+      }
+
+      function displayEmptyMessage() {
+        const emptyMessage = document.getElementById('emptyMessage');
+        if (emptyMessage) {
+          emptyMessage.textContent = 'No flash sales found.';
+          emptyMessage.style.display = 'block';
+        }
+      }
+
+      // Initialize AWS S3 client for Contabo
+      AWS.config.update({
+        accessKeyId: '3c3325e647fb54f813b27751aded8a35',
+        secretAccessKey: '5e8def27fa86d7ee4fa1faaaf4168b22',
+        endpoint: 'https://eu2.contabostorage.com',
+        s3ForcePathStyle: true,
+        region: 'eu2'
+      });
+      const s3 = new AWS.S3();
+
+      // Initialize Supabase
+      let supabase;
+      try {
+        const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+        supabase = createClient(
+          'https://dash.erlli.com/api',
+          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJvbGUiOiJhbm9uIiwiaWF0IjoxNzU2MTcwMTMzLCJleHAiOjIwNzE1MzAxMzN9.Sik1a3Sg-6nokPU0DNKurbrYzjSaPfPaOXtnj2qjRdk'
+        );
+      } catch (error) {
+        displayError(`Failed to load Supabase client: ${error.message}`);
+        return;
+      }
+
+      // Check authentication and fetch admin data
+      async function checkAuth() {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return { isAuthenticated: false, adminData: null, userId: null };
+        }
+        try {
+          const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+          if (sessionError || !session) {
+            window.location.href = 'signin.html';
+            return { isAuthenticated: false, adminData: null, userId: null };
+          }
+          const { data: adminData, error: adminError } = await supabase
+            .from('admins')
+            .select('id, name, logo, email')
+            .eq('id', session.user.id)
+            .single();
+          if (adminError) {
+            displayError(`Failed to fetch admin data: ${adminError.message}`);
+            await supabase.auth.signOut();
+            window.location.href = 'signin.html';
+            return { isAuthenticated: false, adminData: null, userId: null };
+          }
+          return { isAuthenticated: true, adminData, userId: session.user.id };
+        } catch (err) {
+          displayError(`Unexpected error: ${err.message}`);
+          window.location.href = 'signin.html';
+          return { isAuthenticated: false, adminData: null, userId: null };
+        }
+      }
+
+      // Fetch recent messages for the dropdown
+      async function fetchRecentMessages(userId) {
+        try {
+          const { data: conversations, error: convError } = await supabase
+            .from('admin_conversations')
+            .select(`
+              id,
+              admin1_id,
+              admin2_id,
+              admin1:admins!admin_conversations_admin1_id_fkey (name, logo),
+              admin2:admins!admin_conversations_admin2_id_fkey (name, logo)
+            `)
+            .or(`admin1_id.eq.${userId},admin2_id.eq.${userId}`);
+          if (convError) throw convError;
+          const conversationIds = conversations.map(conv => conv.id);
+          if (conversationIds.length === 0) {
+            return [];
+          }
+          const { data: messages, error: msgError } = await supabase
+            .from('admin_messages')
+            .select(`
+              id,
+              content,
+              created_at,
+              conversation_id,
+              sender_id,
+              admins!sender_id (name, logo)
+            `)
+            .in('conversation_id', conversationIds)
+            .order('created_at', { ascending: false })
+            .limit(3);
+          if (msgError) throw msgError;
+          const messagesWithDetails = messages.map(msg => {
+            const conversation = conversations.find(conv => conv.id === msg.conversation_id);
+            const otherAdmin = conversation.admin1_id === userId ? conversation.admin2 : conversation.admin1;
+            const senderName = msg.admins?.name || 'Unknown';
+            const senderLogo = msg.admins?.logo || 'assets/images/profile/profile-image.png';
+            const timeAgo = moment(msg.created_at).fromNow();
+            return {
+              id: msg.id,
+              conversation_id: msg.conversation_id,
+              sender_name: senderName,
+              sender_logo: senderLogo,
+              content: msg.content,
+              time_ago: timeAgo
+            };
+          });
+          return messagesWithDetails;
+        } catch (error) {
+          console.error('Error fetching recent messages:', error);
+          return [];
+        }
+      }
+
+      // Render messages in the dropdown
+      function renderMessagesDropdown(messages) {
+        const dropdown = document.getElementById('messagesDropdown');
+        const noMessagesPlaceholder = document.getElementById('noMessagesPlaceholder');
+        if (!dropdown) return;
+        dropdown.innerHTML = '';
+        if (messages.length === 0) {
+          noMessagesPlaceholder.style.display = 'block';
+          document.getElementById('unreadMessagesCount').textContent = '';
+          return;
+        }
+        noMessagesPlaceholder.style.display = 'none';
+        document.getElementById('unreadMessagesCount').textContent = messages.length > 0 ? messages.length : '';
+        messages.forEach(msg => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <a href="messages.html">
+              <div class="image">
+                <img src="${msg.sender_logo}" alt="${msg.sender_name}" />
+              </div>
+              <div class="content">
+                <h6>${msg.sender_name}</h6>
+                <p>${msg.content.length > 50 ? msg.content.substring(0, 50) + '...' : msg.content}</p>
+                <span>${msg.time_ago}</span>
+              </div>
+            </a>
+          `;
+          dropdown.appendChild(li);
+        });
+      }
+
+      async function fetchFlashSales() {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return;
+        }
+        try {
+          const { data: flashSales, error: flashSalesError } = await Promise.race([
+            supabase
+              .from('flash_sales')
+              .select(`
+                id,
+                campaign_name,
+                start_time,
+                end_time,
+                theme,
+                created_at,
+                banners!left (id, image_urls)
+              `)
+              .order('created_at', { ascending: true }),
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Request timed out')), 10000))
+          ]);
+          if (flashSalesError) throw flashSalesError;
+          const container = document.getElementById('flashSalesContainer');
+          if (!container) {
+            displayError('Flash sales container not found');
+            return;
+          }
+          if (!flashSales || flashSales.length === 0) {
+            displayEmptyMessage();
+            return;
+          }
+          // Clear existing cards, keeping the title
+          while (container.children.length > 1) {
+            container.removeChild(container.lastChild);
+          }
+          flashSales.forEach(flashSale => {
+            let banners = flashSale.banners;
+            if (Array.isArray(banners)) {
+              banners = banners[0] || {};
+            }
+            let imageUrls = banners?.image_urls || [];
+            if (typeof imageUrls === 'string') {
+              try {
+                imageUrls = JSON.parse(imageUrls);
+              } catch (e) {
+                imageUrls = [];
+              }
+            }
+            const firstBannerImage = Array.isArray(imageUrls) && imageUrls.length > 0 ? imageUrls[0] : 'assets/images/cards/card-style-2/card-1.jpg';
+            const bannerId = banners?.id || null;
+            const card = document.createElement('div');
+            card.className = 'col-xl-4 col-lg-4 col-md-6 col-sm-6';
+            card.innerHTML = `
+              <div class="card-style-2 mb-30 ${flashSale.theme || ''}">
+                <div class="card-image">
+                  <a href="view-flash-sale-details.html?id=${flashSale.id}">
+                    <img src="${firstBannerImage}" alt="${flashSale.campaign_name || 'Flash Sale'}" />
+                  </a>
+                  <div class="button-container">
+                    <div class="action-button edit-btn" title="Edit" data-id="${flashSale.id}" data-banner-id="${bannerId}">
+                      <i class="lni lni-pencil"></i>
+                    </div>
+                    <div class="action-button delete-btn" title="Delete" data-id="${flashSale.id}">
+                      <i class="lni lni-trash-can"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-content">
+                  <h4><a href="view-flash-sale-details.html?id=${flashSale.id}">${flashSale.campaign_name || 'N/A'}</a></h4>
+                  <p>Start: ${new Date(flashSale.start_time).toLocaleString()}<br>End: ${new Date(flashSale.end_time).toLocaleString()}</p>
+                </div>
+              </div>
+            `;
+            container.appendChild(card);
+          });
+          // Add delete event listeners
+          document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const id = btn.getAttribute('data-id');
+              if (confirm('Are you sure you want to delete this flash sale and its banners?')) {
+                try {
+                  const { error: bannersError } = await supabase
+                    .from('banners')
+                    .delete()
+                    .eq('flash_sale_id', id);
+                  if (bannersError) throw bannersError;
+                  const { error: flashSaleError } = await supabase
+                    .from('flash_sales')
+                    .delete()
+                    .eq('id', id);
+                  if (flashSaleError) throw flashSaleError;
+                  await fetchFlashSales();
+                } catch (error) {
+                  displayError(`Failed to delete flash sale: ${error.message}`);
+                }
+              }
+            });
+          });
+          // Add edit event listeners
+          document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+              e.preventDefault();
+              const id = btn.getAttribute('data-id');
+              const bannerId = btn.getAttribute('data-banner-id');
+              try {
+                const { data, error } = await supabase
+                  .from('flash_sales')
+                  .select(`
+                    id,
+                    campaign_name,
+                    end_time,
+                    theme,
+                    banners!left (id, image_urls)
+                  `)
+                  .eq('id', id)
+                  .single();
+                if (error) throw error;
+                let banners = data.banners;
+                if (Array.isArray(banners)) {
+                  banners = banners[0] || {};
+                }
+                let imageUrls = banners?.image_urls || [];
+                if (typeof imageUrls === 'string') {
+                  try {
+                    imageUrls = JSON.parse(imageUrls);
+                  } catch (e) {
+                    imageUrls = [];
+                  }
+                }
+                const editModal = document.getElementById('editFlashSaleModal');
+                if (!editModal) {
+                  displayError('Edit modal not found');
+                  return;
+                }
+                const form = editModal.querySelector('#editFlashSaleForm');
+                if (!form) {
+                  displayError('Edit form not found');
+                  return;
+                }
+                // Populate edit modal
+                form.querySelector('#editFlashSaleId').value = data.id || '';
+                form.querySelector('#editBannerId').value = banners?.id || '';
+                form.querySelector('input[name="campaign_name"]').value = data.campaign_name || '';
+                form.querySelector('input[name="end_time"]').value = data.end_time ? new Date(data.end_time).toISOString().slice(0, 16) : '';
+                form.querySelector('select[name="theme"]').value = data.theme || 'green';
+                // Clear existing placeholders
+                const imageContainer = document.getElementById('editImageContainer');
+                const urlContainer = document.getElementById('editUrlContainer');
+                imageContainer.innerHTML = '';
+                urlContainer.innerHTML = '';
+                // Populate with existing images (default to upload mode)
+                imageUrls.forEach((url, index) => {
+                  const placeholderDiv = document.createElement('div');
+                  placeholderDiv.className = 'image-placeholder mb-10';
+                  placeholderDiv.innerHTML = `
+                    <div class="placeholder-img d-flex align-items-center justify-content-center" id="editImagePlaceholder-${index}" style="background-image: url(${url}); background-size: cover; background-position: center;">
+                      ${url ? '' : 'Click to Replace Image'}
+                    </div>
+                    <input type="file" name="banner-${index}" id="editImageInput-${index}" class="hidden-file-input" accept="image/*" />
+                  `;
+                  imageContainer.appendChild(placeholderDiv);
+                  const placeholder = placeholderDiv.querySelector(`#editImagePlaceholder-${index}`);
+                  const fileInput = placeholderDiv.querySelector(`#editImageInput-${index}`);
+                  placeholder.addEventListener('click', () => {
+                    fileInput.click();
+                  });
+                  fileInput.addEventListener('change', () => {
+                    const file = fileInput.files[0];
+                    if (file) {
+                      const reader = new FileReader();
+                      reader.onload = (e) => {
+                        placeholder.style.backgroundImage = `url(${e.target.result})`;
+                        placeholder.classList.add('has-image');
+                        placeholder.textContent = '';
+                      };
+                      reader.readAsDataURL(file);
+                    }
+                  });
+                  const urlDiv = document.createElement('div');
+                  urlDiv.className = 'input-style-1 mb-10';
+                  urlDiv.innerHTML = `
+                    <input type="url" name="url-${index}" id="editUrlInput-${index}" value="${url}" placeholder="Enter image URL" class="form-control" />
+                  `;
+                  urlContainer.appendChild(urlDiv);
+                });
+                // Toggle input method
+                const toggleLink = document.getElementById('editToggleInputMethod');
+                imageContainer.style.display = 'block';
+                urlContainer.style.display = 'none';
+                toggleLink.textContent = 'or input an image URL';
+                toggleLink.addEventListener('click', (e) => {
+                  e.preventDefault();
+                  if (imageContainer.style.display === 'block') {
+                    imageContainer.style.display = 'none';
+                    urlContainer.style.display = 'block';
+                    toggleLink.textContent = 'or upload an image';
+                  } else {
+                    imageContainer.style.display = 'block';
+                    urlContainer.style.display = 'none';
+                    toggleLink.textContent = 'or input an image URL';
+                  }
+                });
+                // Add event listener for adding new image
+                const addNewImageBtn = document.getElementById('addNewImageBtn');
+                if (addNewImageBtn) {
+                  addNewImageBtn.addEventListener('click', () => {
+                    const newIndex = imageContainer.querySelectorAll('.image-placeholder').length;
+                    if (imageContainer.style.display === 'block') {
+                      const placeholderDiv = document.createElement('div');
+                      placeholderDiv.className = 'image-placeholder mb-10';
+                      placeholderDiv.innerHTML = `
+                        <div class="placeholder-img d-flex align-items-center justify-content-center" id="editImagePlaceholder-${newIndex}">
+                          Click to Add Image
+                        </div>
+                        <input type="file" name="banner-${newIndex}" id="editImageInput-${newIndex}" class="hidden-file-input" accept="image/*" />
+                      `;
+                      imageContainer.appendChild(placeholderDiv);
+                      const placeholder = placeholderDiv.querySelector(`#editImagePlaceholder-${newIndex}`);
+                      const fileInput = placeholderDiv.querySelector(`#editImageInput-${newIndex}`);
+                      placeholder.addEventListener('click', () => {
+                        fileInput.click();
+                      });
+                      fileInput.addEventListener('change', () => {
+                        const file = fileInput.files[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = (e) => {
+                            placeholder.style.backgroundImage = `url(${e.target.result})`;
+                            placeholder.classList.add('has-image');
+                            placeholder.textContent = '';
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      });
+                    } else {
+                      const urlDiv = document.createElement('div');
+                      urlDiv.className = 'input-style-1 mb-10';
+                      urlDiv.innerHTML = `
+                        <input type="url" name="url-${newIndex}" id="editUrlInput-${newIndex}" placeholder="Enter image URL" class="form-control" />
+                      `;
+                      urlContainer.appendChild(urlDiv);
+                    }
+                  });
+                }
+                // Show modal
+                const modal = new bootstrap.Modal(editModal);
+                modal.show();
+              } catch (error) {
+                displayError(`Failed to load flash sale data: ${error.message}`);
+              }
+            });
+          });
+        } catch (error) {
+          displayError(`Error fetching flash sales: ${error.message}`);
+        }
+      }
+
+      async function uploadBanners(files) {
+        if (!files || files.length === 0) {
+          return [];
+        }
+        const imageUrls = [];
+        for (const file of files) {
+          const fileName = `banner_${Date.now()}_${Math.random().toString(36).substring(2, 8)}.jpg`;
+          const maxSize = 5 * 1024 * 1024; // 5MB limit
+          try {
+            // Validate file size
+            if (file.size > maxSize) {
+              throw new Error('Image size exceeds 5MB limit');
+            }
+            // Validate file type
+            if (!['image/jpeg', 'image/png'].includes(file.type)) {
+              throw new Error('Only JPEG and PNG images are supported');
+            }
+            // Read file as ArrayBuffer
+            const arrayBuffer = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = () => reject(new Error('Failed to read file'));
+              reader.readAsArrayBuffer(file);
+            });
+            const params = {
+              Bucket: 'erllicom',
+              Key: `public/${fileName}`,
+              Body: arrayBuffer,
+              ContentType: file.type,
+              ACL: 'public-read'
+            };
+            // Upload to Contabo
+            await new Promise((resolve, reject) => {
+              s3.upload(params, (err, data) => {
+                if (err) {
+                  reject(new Error(`Failed to upload to Contabo: ${err.message}`));
+                } else {
+                  resolve(data);
+                }
+              });
+            });
+            const publicUrl = `https://eu2.contabostorage.com/64f7bfe94c084c59a58b3cd25e4508eb:erllicom/public/${fileName}`;
+            imageUrls.push(publicUrl);
+          } catch (error) {
+            displayError(`Failed to upload banner: ${error.message}`);
+            return null;
+          }
+        }
+        return imageUrls;
+      }
+
+      async function saveFlashSale() {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return;
+        }
+        const form = document.getElementById('addFlashSaleForm');
+        const campaign_name = form.querySelector('input[name="campaign_name"]').value.trim();
+        const start_time = form.querySelector('input[name="start_time"]').value;
+        const end_time = form.querySelector('input[name="end_time"]').value;
+        const theme = form.querySelector('select[name="theme"]').value;
+        const imageContainer = document.getElementById('addImageContainer');
+        const urlContainer = document.getElementById('addUrlContainer');
+        if (!campaign_name || !start_time || !end_time || !theme) {
+          displayError('Please fill in all required fields.');
+          return;
+        }
+        const startDate = new Date(start_time);
+        const endDate = new Date(end_time);
+        if (endDate <= startDate) {
+          displayError('End time must be after start time.');
+          return;
+        }
+        try {
+          // Fetch all flash sales to check for overlaps
+          const { data: existingFlashSales, error: fetchError } = await supabase
+            .from('flash_sales')
+            .select('id, campaign_name, start_time, end_time');
+          if (fetchError) throw fetchError;
+          // Check for overlapping flash sales
+          const hasOverlap = existingFlashSales.some(sale => {
+            const existingStart = new Date(sale.start_time);
+            const existingEnd = new Date(sale.end_time);
+            // Overlap occurs if new start_time is before existing end_time AND new end_time is after existing start_time
+            return startDate < existingEnd && endDate > existingStart;
+          });
+          if (hasOverlap) {
+            const conflictingSale = existingFlashSales.find(sale => {
+              const existingStart = new Date(sale.start_time);
+              const existingEnd = new Date(sale.end_time);
+              return startDate < existingEnd && endDate > existingStart;
+            });
+            displayError(`Cannot create flash sale. It overlaps with "${conflictingSale.campaign_name}" scheduled from ${new Date(conflictingSale.start_time).toLocaleString()} to ${new Date(conflictingSale.end_time).toLocaleString()}.`);
+            return;
+          }
+          // Collect images or URLs
+          let imageUrls = [];
+          if (imageContainer.style.display === 'block') {
+            const fileInputs = imageContainer.querySelectorAll('input[type="file"]');
+            const files = [];
+            fileInputs.forEach(input => {
+              if (input.files && input.files.length > 0) {
+                files.push(input.files[0]);
+              }
+            });
+            if (files.length > 0) {
+              imageUrls = await uploadBanners(files);
+              if (!imageUrls) return;
+            }
+          } else {
+            const urlInputs = urlContainer.querySelectorAll('input[type="url"]');
+            urlInputs.forEach(input => {
+              if (input.value.trim()) {
+                imageUrls.push(input.value.trim());
+              }
+            });
+          }
+          // Insert the new flash sale
+          const { data: flashSale, error: flashSaleError } = await supabase
+            .from('flash_sales')
+            .insert([{ campaign_name, start_time, end_time, theme }])
+            .select()
+            .single();
+          if (flashSaleError) throw flashSaleError;
+          if (imageUrls.length > 0) {
+            const { error: bannersError } = await supabase
+              .from('banners')
+              .insert([{ flash_sale_id: flashSale.id, image_urls: imageUrls }]);
+            if (bannersError) throw bannersError;
+          }
+          const modal = bootstrap.Modal.getInstance(document.getElementById('addFlashSaleModal'));
+          modal.hide();
+          form.reset();
+          imageContainer.innerHTML = `
+            <div class="image-placeholder mb-10">
+              <div class="placeholder-img d-flex align-items-center justify-content-center" id="addImagePlaceholder-0">
+                Add Banners (Multiple Images)
+              </div>
+              <input type="file" name="banner-0" id="addImageInput-0" class="hidden-file-input" accept="image/*" />
+            `;
+          urlContainer.innerHTML = `
+            <div class="input-style-1 mb-10">
+              <input type="url" name="url-0" id="addUrlInput-0" placeholder="Enter image URL" class="form-control" />
+            </div>
+          `;
+          imageContainer.style.display = 'block';
+          urlContainer.style.display = 'none';
+          document.getElementById('addToggleInputMethod').textContent = 'or input an image URL';
+          await fetchFlashSales();
+        } catch (error) {
+          displayError(`Error saving flash sale: ${error.message}`);
+        }
+      }
+
+      async function updateFlashSale() {
+        if (!supabase) {
+          displayError('Supabase client not initialized');
+          return;
+        }
+        const form = document.getElementById('editFlashSaleForm');
+        if (!form) {
+          displayError('Edit form not found');
+          return;
+        }
+        const id = form.querySelector('#editFlashSaleId').value;
+        const bannerId = form.querySelector('#editBannerId').value;
+        const campaign_name = form.querySelector('input[name="campaign_name"]').value.trim();
+        const end_time = form.querySelector('input[name="end_time"]').value;
+        const theme = form.querySelector('select[name="theme"]').value;
+        const imageContainer = document.getElementById('editImageContainer');
+        const urlContainer = document.getElementById('editUrlContainer');
+        if (!id || !campaign_name || !end_time || !theme) {
+          displayError('Please fill in all required fields.');
+          return;
+        }
+        const endDate = new Date(end_time);
+        const now = new Date();
+        if (endDate <= now) {
+          displayError('End time must be in the future.');
+          return;
+        }
+        try {
+          // Fetch all flash sales except the one being edited to check for overlaps
+          const { data: existingFlashSales, error: fetchError } = await supabase
+            .from('flash_sales')
+            .select('id, campaign_name, start_time, end_time')
+            .neq('id', id); // Exclude the current flash sale
+          if (fetchError) throw fetchError;
+          // Get the start_time of the flash sale being edited
+          const { data: currentFlashSale, error: currentError } = await supabase
+            .from('flash_sales')
+            .select('start_time')
+            .eq('id', id)
+            .single();
+          if (currentError) throw currentError;
+          const startDate = new Date(currentFlashSale.start_time);
+          if (endDate <= startDate) {
+            displayError('End time must be after start time.');
+            return;
+          }
+          // Check for overlapping flash sales
+          const hasOverlap = existingFlashSales.some(sale => {
+            const existingStart = new Date(sale.start_time);
+            const existingEnd = new Date(sale.end_time);
+            return startDate < existingEnd && endDate > existingStart;
+          });
+          if (hasOverlap) {
+            const conflictingSale = existingFlashSales.find(sale => {
+              const existingStart = new Date(sale.start_time);
+              const existingEnd = new Date(sale.end_time);
+              return startDate < existingEnd && endDate > existingStart;
+            });
+            displayError(`Cannot update flash sale. It overlaps with "${conflictingSale.campaign_name}" scheduled from ${new Date(conflictingSale.start_time).toLocaleString()} to ${new Date(conflictingSale.end_time).toLocaleString()}.`);
+            return;
+          }
+          // Collect images or URLs
+          let imageUrls = [];
+          if (imageContainer.style.display === 'block') {
+            const fileInputs = imageContainer.querySelectorAll('input[type="file"]');
+            for (const input of fileInputs) {
+              if (input.files && input.files.length > 0) {
+                const uploadedUrls = await uploadBanners([input.files[0]]);
+                if (!uploadedUrls) return;
+                imageUrls.push(uploadedUrls[0]);
+              } else {
+                const placeholder = input.previousElementSibling;
+                const currentUrl = placeholder.style.backgroundImage.replace(/^url\(["']?/, '').replace(/["']?\)$/, '');
+                if (currentUrl && !currentUrl.includes('assets/images/cards')) {
+                  imageUrls.push(currentUrl);
+                }
+              }
+            }
+          } else {
+            const urlInputs = urlContainer.querySelectorAll('input[type="url"]');
+            urlInputs.forEach(input => {
+              if (input.value.trim()) {
+                imageUrls.push(input.value.trim());
+              }
+            });
+          }
+          // Update the flash sale
+          const { error: flashSaleError } = await supabase
+            .from('flash_sales')
+            .update({ campaign_name, end_time, theme })
+            .eq('id', id);
+          if (flashSaleError) throw flashSaleError;
+          if (imageUrls.length > 0) {
+            if (bannerId) {
+              const { error: bannersError } = await supabase
+                .from('banners')
+                .update({ image_urls: imageUrls })
+                .eq('id', bannerId);
+              if (bannersError) throw bannersError;
+            } else {
+              const { error: bannersError } = await supabase
+                .from('banners')
+                .insert([{ flash_sale_id: id, image_urls: imageUrls }]);
+              if (bannersError) throw bannersError;
+            }
+          } else if (bannerId) {
+            const { error: bannersError } = await supabase
+              .from('banners')
+              .delete()
+              .eq('id', bannerId);
+            if (bannersError) throw bannersError;
+          }
+          const modal = bootstrap.Modal.getInstance(document.getElementById('editFlashSaleModal'));
+          modal.hide();
+          form.reset();
+          imageContainer.innerHTML = '';
+          urlContainer.innerHTML = '';
+          imageContainer.style.display = 'block';
+          urlContainer.style.display = 'none';
+          document.getElementById('editToggleInputMethod').textContent = 'or input an image URL';
+          await fetchFlashSales();
+        } catch (error) {
+          displayError(`Error updating flash sale: ${error.message}`);
+        }
+      }
+
+      // Handle image placeholder click and preview for add modal
+      const addImageContainer = document.getElementById('addImageContainer');
+      const addUrlContainer = document.getElementById('addUrlContainer');
+      if (addImageContainer && addUrlContainer) {
+        addImageContainer.addEventListener('click', (e) => {
+          const placeholder = e.target.closest('.placeholder-img');
+          if (placeholder) {
+            const fileInput = placeholder.nextElementSibling;
+            if (fileInput && fileInput.type === 'file') {
+              fileInput.click();
+            }
+          }
+        });
+        addImageContainer.addEventListener('change', (e) => {
+          const fileInput = e.target;
+          if (fileInput.type === 'file' && fileInput.files && fileInput.files.length > 0) {
+            const file = fileInput.files[0];
+            const placeholder = fileInput.previousElementSibling;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              placeholder.style.backgroundImage = `url(${ev.target.result})`;
+              placeholder.style.backgroundSize = 'cover';
+              placeholder.style.backgroundPosition = 'center';
+              placeholder.textContent = '';
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+        // Toggle input method
+        const toggleLink = document.getElementById('addToggleInputMethod');
+        addImageContainer.style.display = 'block';
+        addUrlContainer.style.display = 'none';
+        toggleLink.textContent = 'or input an image URL';
+        toggleLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (addImageContainer.style.display === 'block') {
+            addImageContainer.style.display = 'none';
+            addUrlContainer.style.display = 'block';
+            toggleLink.textContent = 'or upload an image';
+          } else {
+            addImageContainer.style.display = 'block';
+            addUrlContainer.style.display = 'none';
+            toggleLink.textContent = 'or input an image URL';
+          }
+        });
+        const addNewImageBtnAddModal = document.getElementById('addNewImageBtnAddModal');
+        if (addNewImageBtnAddModal) {
+          addNewImageBtnAddModal.addEventListener('click', () => {
+            const newIndex = addImageContainer.querySelectorAll('.image-placeholder').length;
+            if (addImageContainer.style.display === 'block') {
+              const placeholderDiv = document.createElement('div');
+              placeholderDiv.className = 'image-placeholder mb-10';
+              placeholderDiv.innerHTML = `
+                <div class="placeholder-img d-flex align-items-center justify-content-center" id="addImagePlaceholder-${newIndex}">
+                  Add Banners (Multiple Images)
+                </div>
+                <input type="file" name="banner-${newIndex}" id="addImageInput-${newIndex}" class="hidden-file-input" accept="image/*" />
+              `;
+              addImageContainer.appendChild(placeholderDiv);
+            } else {
+              const urlDiv = document.createElement('div');
+              urlDiv.className = 'input-style-1 mb-10';
+              urlDiv.innerHTML = `
+                <input type="url" name="url-${newIndex}" id="addUrlInput-${newIndex}" placeholder="Enter image URL" class="form-control" />
+              `;
+              addUrlContainer.appendChild(urlDiv);
+            }
+          });
+        }
+      }
+
+      // Handle save button click for add modal
+      const saveFlashSaleBtn = document.getElementById('saveFlashSaleBtn');
+      if (saveFlashSaleBtn) {
+        saveFlashSaleBtn.addEventListener('click', saveFlashSale);
+      }
+
+      // Handle update button click for edit modal
+      const updateFlashSaleBtn = document.getElementById('updateFlashSaleBtn');
+      if (updateFlashSaleBtn) {
+        updateFlashSaleBtn.addEventListener('click', updateFlashSale);
+      }
+
+      // Handle logout
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          try {
+            if (supabase) {
+              const { error } = await supabase.auth.signOut();
+              if (error) throw error;
+            }
+            localStorage.removeItem('isAuthenticated');
+            window.location.href = 'signin.html';
+          } catch (error) {
+            displayError(`Logout failed: ${error.message}`);
+          }
+        });
+      }
+
+      // Initialize page
+      const { isAuthenticated, adminData, userId } = await checkAuth();
+      if (!isAuthenticated) return;
+
+      // Update header with admin data
+      if (adminData) {
+        document.getElementById('profile-name').textContent = adminData.name || 'Admin';
+        document.getElementById('dropdown-profile-name').textContent = adminData.name || 'Admin';
+        document.getElementById('dropdown-profile-email').textContent = adminData.email || 'Email not set';
+        if (adminData.logo) {
+          document.getElementById('profile-image').src = adminData.logo;
+          document.getElementById('dropdown-profile-image').src = adminData.logo;
+        }
+      }
+
+      // Populate messages dropdown
+      const messages = await fetchRecentMessages(userId);
+      renderMessagesDropdown(messages);
+
+      await fetchFlashSales();
+    })();
+  </script>
+  </body>
+</html>
+
